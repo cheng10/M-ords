@@ -1,2 +1,2 @@
 # M-ords  
-A english learning app.
+An english learning app which mainly facilitate learners memorying words.
