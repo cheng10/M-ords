@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from mords_api.serializers import UserSerializer, GroupSerializer
+from serializers import *
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -17,3 +17,35 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+
+class LearnerViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Learner.objects.all()
+    serializer_class = LearnerSerializer
+
+
+class BookViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+
+class WordViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Word.objects.all()
+    serializer_class = WordSerializer
+
+
+class NoteViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
