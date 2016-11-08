@@ -15,12 +15,6 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'name')
 
 
-class LearnerSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Learner
-        fields = ('url', 'username', 'email')
-
-
 class WordSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Word
@@ -28,13 +22,30 @@ class WordSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class BookSerializer(serializers.HyperlinkedModelSerializer):
+    word = WordSerializer(many=True)
+
     class Meta:
         model = Book
-        fields = ('url', 'bookName')
+        fields = ('url', 'name', 'word')
+
+
+class LearnerSerializer(serializers.HyperlinkedModelSerializer):
+    # user = UserSerializer
+    # book = BookSerializer
+    user = serializers.StringRelatedField()
+    book = serializers.StringRelatedField()
+
+    class Meta:
+        model = Learner
+        fields = ('url', 'user', 'book', 'words_perDay', 'words_finished')
 
 
 class NoteSerializer(serializers.HyperlinkedModelSerializer):
+    # word = WordSerializer
+    word = serializers.StringRelatedField()
+    author = LearnerSerializer
+
     class Meta:
         model = Note
-        fields = ('url', 'text')
+        fields = ('url', 'word', 'pub_date', 'author', 'text')
 

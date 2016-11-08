@@ -1,0 +1,68 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields":
+    {
+        "password": "pbkdf2_sha256$30000$6Q26jRZOkjSb$g4nsiv7qQ0bG2M+NiE98Xiz4f4aoITecLnAXouyI6ko=",
+        "last_login": null,
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-11-08T06:03:55.143Z",
+        "groups": [],
+        "user_permissions": []
+    }
+  },
+  {
+    "model": "mords_api.word",
+    "pk": 1,
+    "fields":
+    {
+      "text": "apple"
+    }
+  },
+  {
+    "model": "mords_api.word",
+    "pk": 2,
+    "fields":
+    {
+      "text": "banana"
+    }
+  },
+  {
+    "model": "mords_api.book",
+    "pk": 1,
+    "fields":
+    {
+      "name": "testBook",
+      "word": [1, 2]
+    }
+  },
+  {
+    "model": "mords_api.learner",
+    "pk": 1,
+    "fields":
+    {
+      "user": 1,
+      "book": 1,
+      "words_perDay": 3,
+      "words_finished": 0
+    }
+  },
+  {
+    "model": "mords_api.note",
+    "pk": 1,
+    "fields":
+    {
+      "word": 1,
+      "author": 1,
+      "pub_date": "2017-01-01",
+      "text": "I love apple!"
+    }
+  }
+]
