@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Login | Mords</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="css/palette.css" rel="stylesheet">
+
+    <link href="css/style.css" rel="stylesheet">
+
+
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/icon?family=Material+Icons">
+
+    
+    <!-- Bootstrap Material Design -->
+    <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap-material-design/dist/css/bootstrap-material-design.css">
+    <link rel="stylesheet" type="text/css" href="../node_modules/bootstrap-material-design/dist/css/ripples.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default navbar-no-margin" style="background: #455A64;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">
+                <img alt="Brand" src="...">
+              </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="login-content login-bg1">
+    <div class="placeholder"> </div>
+      <form class="form-signin" role="form">
+        <h2 class="form-signin-heading h-no-margin text-primary-color">Welcome to M-ords.</h2>
+        <input type="email" class="form-control" placeholder="Email address" required autofocus>
+        <input type="password" class="form-control" placeholder="Password" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Log   in</button>
+        <a class="btn btn-lg btn-primary btn-block" href="#">Sign up</a>
+      </form>
+    </div>
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src="../node_modules/bootstrap-material-design/dist/js/material.js"></script>
+    <script src="../node_modules/bootstrap-material-design/dist/js/ripples.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script>
+        $.material.init();
+        $(document).ready(function(){ 
+            setInterval(function slides(){
+                var bgi = $(".login-content").css("background-image");
+                bgi = bgi.slice(-7,-6);
+                
+                if (bgi=='1') {
+                    $(".login-content").removeClass("login-bg1");
+                    $(".login-content").addClass("login-bg2");
+                }else if (bgi=='2') {
+                    $(".login-content").removeClass("login-bg2");
+                    $(".login-content").addClass("login-bg3");
+                }else{
+                    $(".login-content").removeClass("login-bg3");
+                    $(".login-content").addClass("login-bg1");
+                }},4000);
+        });
+    </script>
+
+</body>
+
+</html>
