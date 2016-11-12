@@ -150,18 +150,17 @@ div .login-content {
 	padding: 0;
 }
 
-
 .main .row .col-cards{
-	width: 30%;
+	width: 40%;
 	height: 100%;
 	margin:10px;
-	padding: 0;
 }
 
 .wordcard{
 	background: #FFFFFF;
-	height: 20%;
+	height: 40%;
 	width: 100%;
+	margin-bottom: 20px;
 	box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.2);
 }
 
