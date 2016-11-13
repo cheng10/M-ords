@@ -15,19 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from rest_framework import routers
-from mords_api import views
 
-router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
-router.register(r'learner', views.LearnerViewSet)
-router.register(r'book', views.BookViewSet)
-router.register(r'word', views.WordViewSet)
-router.register(r'note', views.NoteViewSet)
 
 urlpatterns = [
-    url(r'^', include(router.urls)),
+    url(r'^mords/', include('mords.urls')),
+    url(r'^api/', include('mords_api.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', admin.site.urls),
 ]
