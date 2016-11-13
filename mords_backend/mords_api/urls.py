@@ -10,6 +10,6 @@ router.register(r'book', views.BookViewSet)
 router.register(r'word', views.WordViewSet)
 router.register(r'note', views.NoteViewSet)
 
-urlpatterns = {
-    url(r'^', include(router.urls))
-}
+urlpatterns = [
+    url(r'^', include(router.urls), name='api')
+]
