@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from mords_api.models import Word, Book, Learner, Note
+
+admin.site.register(Word)
+admin.site.register(Book)
+admin.site.register(Learner)
+admin.site.register(Note)

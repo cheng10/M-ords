@@ -64,5 +64,16 @@
       "pub_date": "2017-01-01",
       "text": "I love apple!"
     }
+  },
+  {
+    "model": "mords_api.note",
+    "pk": 2,
+    "fields":
+    {
+      "word": 2,
+      "author": 1,
+      "pub_date": "2017-01-01",
+      "text": "I love banana!"
+    }
   }
 ]

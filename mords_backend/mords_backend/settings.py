@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'mords_api'
+    'mords_api',
+    'mords.apps.MordsConfig',
 ]
 
 REST_FRAMEWORK = {
