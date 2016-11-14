@@ -5,21 +5,34 @@ from django.http import Http404
 from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.views import generic
 from mords_api.models import Note, Word, Learner
+
+
+class IndexView(generic.ListView):
+    template_name = 'mords/index.html'
+    context_object_name = 'latest_note_list'
+
+    def get_queryset(self):
+        """
+        Returns the last five published notes.
+
+        """
+        return Note.objects.order_by('-pub_date')[:5]
 
 
 # def index(request):
 #     return HttpResponse("Hello, world. Welcome to Mords!")
 
 
-def index(request):
-    latest_note_list = Note.objects.order_by('-pub_date')[:5]
-    # tempalte = loader.get_template('mords/index.html')
-    context = {
-        'latest_note_list': latest_note_list,
-    }
-    # return HttpResponse(tempalte.render(context, request))
-    return render(request, 'mords/index.html', context)
+# def index(request):
+#     latest_note_list = Note.objects.order_by('-pub_date')[:5]
+#     # tempalte = loader.get_template('mords/index.html')
+#     context = {
+#         'latest_note_list': latest_note_list,
+#     }
+#     # return HttpResponse(tempalte.render(context, request))
+#     return render(request, 'mords/index.html', context)
 
 
 def detail(request, word_text):
