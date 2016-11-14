@@ -45,7 +45,7 @@ class Learner(models.Model):
 
 @python_2_unicode_compatible
 class Note(models.Model):
-    word = models.ForeignKey(Word, related_name='word', on_delete=models.CASCADE)
+    word = models.ForeignKey(Word, on_delete=models.CASCADE)
     pub_date = models.DateTimeField()
     author = models.ForeignKey('Learner', on_delete=models.CASCADE)
     text = models.TextField()
