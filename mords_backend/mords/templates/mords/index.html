@@ -1,3 +1,7 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'mords/style.css' %}" />
+
 {% if latest_note_list %}
     <ul>
         {% for note in latest_note_list %}
