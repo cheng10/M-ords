@@ -14,7 +14,8 @@
 	font-size: inherit;
 }
 .imgcover {
-  object-fit: cover;
+	object-fit: cover;
+}
 
 html{
 	height: 100%;
@@ -92,7 +93,7 @@ body{
 }
 
 .form-signup .form-group input{
-	margin-right: :10px;
+	margin-right:10px;
 }
 
 #myModal{
@@ -135,7 +136,6 @@ div .login-content {
   	opacity: 0.3;
 }
 
-<<<<<<< HEAD
 .slider .nearlyfullscreen {
   height: 100%;
   width: 100%;
@@ -153,7 +153,7 @@ div .login-content {
 .form-signin{
 	width: 40%;
 }
-=======
+
 .body-index{
 	display: flex;
 	flex-flow: column;
