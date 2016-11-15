@@ -1,11 +1,11 @@
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.db import IntegrityError
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from django.template import loader
-from django.http import Http404
 from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views import generic
+from django.contrib.auth.models import User
 from mords_api.models import Note, Word, Learner
 
 
@@ -24,10 +24,6 @@ class IndexView(generic.ListView):
 
 
 # def index(request):
-#     return HttpResponse("Hello, world. Welcome to Mords!")
-
-
-# def index(request):
 #     latest_note_list = Note.objects.order_by('-pub_date')[:5]
 #     # tempalte = loader.get_template('mords/index.html')
 #     context = {
@@ -35,6 +31,27 @@ class IndexView(generic.ListView):
 #     }
 #     # return HttpResponse(tempalte.render(context, request))
 #     return render(request, 'mords/index.html', context)
+
+
+def signup(request):
+    try:
+        username = request.POST['username']
+        pwd = request.POST['password']
+    except KeyError:
+        error_message = 'You did not enter username or password.'
+        return HttpResponseRedirect(reverse('mords:signup', args=(error_message,)))
+
+    else:
+        try:
+            user = User.objects.create(
+                username=username,
+                password=pwd
+            )
+        except IntegrityError:
+            error_message = 'User already exist.'
+            return HttpResponseRedirect(reverse('mords:signup', args=(error_message,)))
+
+        return HttpResponseRedirect(reverse('mords:login',))
 
 
 def detail(request, word_text):

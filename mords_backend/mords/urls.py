@@ -4,6 +4,7 @@ from . import views
 app_name = 'mords'
 urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^signup/', views.signup, name='signup'),
     # url(r'^$', views.index, name='index'),
     # url(r'^(?P<word_text>[a-z]+)/$', views.DetailView.as_view, name='detail'),
     # url(r'^(?P<word_text>[a-z]+)/results/$', views.ResultsView.as_view, name='results'),
