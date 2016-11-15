@@ -15,10 +15,12 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """
-        Returns the last five published notes.
+        Return the last five published notes (not including those set to be
+        published in the future).
 
         """
-        return Note.objects.order_by('-pub_date')[:5]
+        # return Note.objects.order_by('-pub_date')[:5]
+        return Note.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
 
 
 # def index(request):
@@ -36,14 +38,17 @@ class IndexView(generic.ListView):
 
 
 def detail(request, word_text):
-    # return HttpResponse("You're looking at word %s." % word_text)
-    # try:
-    #     word = Word.objects.get(text=word_text)
-    # except Word.DoesNotExist:
-    #     raise Http404("Word does not exist")
+    """
+    Excludes any notes that aren't published yet.
+    :param request:
+    :param word_text:
+    :return:
+    """
     word = get_object_or_404(Word, text=word_text)
+    notes = word.note_set.all().filter(pub_date__lte=timezone.now())
     context = {
-        'word': word
+        'word': word,
+        'notes': notes
     }
     return render(request, 'mords/detail.html', context)
 
