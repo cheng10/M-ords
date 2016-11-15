@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 /* Custom Stylesheet */
 /**
  * Use this file to override Materialize files so you can update
@@ -15,7 +15,7 @@
 }
 .imgcover {
   object-fit: cover;
-=======
+
 html{
 	height: 100%;
 }
@@ -266,4 +266,4 @@ div .login-content {
     color: #fff;
     background: none;
 }
->>>>>>> origin/zhaorui
+
