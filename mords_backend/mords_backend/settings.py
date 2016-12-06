@@ -82,12 +82,24 @@ WSGI_APPLICATION = 'mords_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+# use postgreSQL database on mords.cc
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'wordsdb',
+            'USER': 'dbuser',
+            'PASSWORD': 'mydbpass',
+            'HOST': 'mords.cc',
+            'PORT': '',  # default: 5432
+        }
     }
-}
 
 
 # Password validation
