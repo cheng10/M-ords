@@ -39,8 +39,37 @@
     "pk": 1,
     "fields":
     {
-      "name": "testBook",
-      "word": [1, 2]
+      "name": "testBook"
+    }
+  },
+  {
+    "model": "mords_api.book",
+    "pk": 2,
+    "fields":
+    {
+      "name": "urban_dic_new"
+    }
+  },
+  {
+    "model": "mords_api.entry",
+    "pk": 1,
+    "fields":
+    {
+      "text": "apple",
+      "defn": "apple definition",
+      "exmp": "apple example",
+      "book": 1
+    }
+  },
+  {
+    "model": "mords_api.entry",
+    "pk": 2,
+    "fields":
+    {
+      "text": "banana",
+      "defn": "banana definition",
+      "exmp": "banana example",
+      "book": 2
     }
   },
   {

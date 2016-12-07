@@ -19,8 +19,9 @@ class IndexView(generic.ListView):
         published in the future).
 
         """
+        return Note.objects.order_by('-pub_date')
         # return Note.objects.order_by('-pub_date')[:5]
-        return Note.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+        # return Note.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
 
 
 # def index(request):

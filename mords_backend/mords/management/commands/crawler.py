@@ -6,7 +6,6 @@ class Command(BaseCommand):
     help = 'crawl dictionary data from urban dictionary'
 
     def handle(self, *args, **options):
-        book =
 
         # raise CommandError('Poll "%s" does not exist' % poll_id)
 

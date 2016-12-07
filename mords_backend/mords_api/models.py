@@ -20,7 +20,9 @@ class Word(models.Model):
 @python_2_unicode_compatible
 class Book(models.Model):
     name = models.CharField(max_length=200)
-    word = models.ManyToManyField(Word, blank=True)
+    pub_date = models.DateField(null=True)
+    update_date = models.DateField(null=True)
+    desc = models.TextField(blank=True)
 
     def __str__(self):
         return self.name
@@ -30,9 +32,20 @@ class Book(models.Model):
 
 
 @python_2_unicode_compatible
+class Entry(models.Model):
+    text = models.CharField(max_length=200)
+    defn = models.TextField()
+    exmp = models.TextField()
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.text
+
+
+@python_2_unicode_compatible
 class Learner(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, blank=True)
+    user = models.OneToOneField(User)
+    book = models.ForeignKey(Book, on_delete=models.SET_NULL, blank=False, null=True)
     words_perDay = models.PositiveIntegerField(default=0)
     words_finished = models.PositiveIntegerField(default=0)
 
@@ -46,8 +59,8 @@ class Learner(models.Model):
 @python_2_unicode_compatible
 class Note(models.Model):
     word = models.ForeignKey(Word, on_delete=models.CASCADE)
-    pub_date = models.DateTimeField()
-    author = models.ForeignKey('Learner', on_delete=models.CASCADE)
+    pub_date = models.DateTimeField(blank=False)
+    author = models.ForeignKey(Learner, on_delete=models.CASCADE)
     text = models.TextField()
 
     def __str__(self):
