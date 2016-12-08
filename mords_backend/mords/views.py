@@ -85,7 +85,8 @@ def detail(request, word_text):
     :return:
     """
     word = get_object_or_404(Word, text=word_text)
-    notes = word.note_set.all().filter(pub_date__lte=timezone.now())
+    notes = word.note_set.all()
+    # notes = word.note_set.all().filter(pub_date__lte=timezone.now())
     context = {
         'word': word,
         'notes': notes
