@@ -1,11 +1,22 @@
-<h1>{{ word.text }}</h1>
+{% extends 'mords/base.html' %}
+{% load staticfiles %}
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% block title_block %}
+    Detail
+{% endblock %}
 
-<ul>
-    {% for note in word.note_set.all %}
-    <li>{{ note.text }}</li>
-    {% endfor %}
-</ul>
+{% block body_block %}
 
-<a href="{% url 'mords:detail' word.text %}">Comment again?</a>
+    <h1>{{ word.text }}</h1>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    <ul>
+        {% for note in word.note_set.all %}
+        <li>{{ note.text }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'mords:detail' word.text %}">Comment again?</a>
+
+{% endblock %}
+
+
+
