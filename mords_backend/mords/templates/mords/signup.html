@@ -1,4 +1,4 @@
-{% extends 'mords/base.html' %}
+{% extends 'mords/base_auth.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
@@ -6,21 +6,27 @@ Signup
 {% endblock %}
 
 {% block body_block %}
-    <h1>Signup Page</h1>
-    {% if registered %}
-       <strong>thank you for registering!</strong>
-        <a href="{% url 'mords:index' %}">Return to the homepage.</a><br />
-    {% else %}
 
-        <strong>register here!</strong><br />
-        <form id="user_form" method="post" action="{% url 'mords:signup' %}"
-        enctype="multipart/form-data">
-        {% csrf_token %}
-        <!-- Display each form -->
-        {{ user_form.as_p }}
-        {{ learner_form.as_p }}
-        <!-- Provide a button to click to submit the form. -->
-        <input type="submit" name="submit" value="Register" />
-        </form>
+    <div class="panel-heading">
+        <h3 class="panel-title">Sign Up</h3>
+    </div>
+    {% if registered %}
+        <div class="panel-body">
+            <strong>thank you for registering!</strong>
+            <a href="{% url 'mords:index' %}">Return to the homepage.</a><br />
+        </div>
+    {% else %}
+        <div class="panel-body">
+            <form role="form" id="user_form" method="post" action="{% url 'mords:signup' %}"
+            enctype="multipart/form-data">
+                <fieldset>
+                    {% csrf_token %}
+                    {{ user_form.as_p }}
+                    {{ learner_form.as_p }}
+                    <input type="submit" name="submit" value="Signup" class="btn btn-lg btn-success btn-block"/>
+                </fieldset>
+            </form>
+        </div>
     {% endif %}
+
 {% endblock %}
