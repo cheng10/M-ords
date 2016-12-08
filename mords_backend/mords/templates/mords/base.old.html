@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+    {% load staticfiles %}
+<html>
+    <head lang="en">
+        <meta charset="UTF-8" />
+        <title>Mords</title>
+    </head>
+    <body>
+        <ul>
+            <li><a href="{% url 'mords:index' %}">Index</a></li>
+            <li><a href="{% url 'mords:signup' %}">Sign up</a></li>
+        </ul>
+        {% block body_block %}
+            This is body_block's default content.
+        {% endblock %}
+    </body>
+</html>
+
+
