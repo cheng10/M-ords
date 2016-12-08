@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.contrib.auth.models import User
 from mords_api.models import Note, Word, Learner
+from forms import UserForm, LearnerForm
 
 
 class IndexView(generic.ListView):
@@ -35,24 +36,35 @@ class IndexView(generic.ListView):
 
 
 def signup(request):
-    try:
-        username = request.POST['username']
-        pwd = request.POST['password']
-    except KeyError:
-        error_message = 'You did not enter username or password.'
-        return HttpResponseRedirect(reverse('mords:signup', args=(error_message,)))
-
+    registered = False
+    if request.method == 'POST':
+        user_form = UserForm(data=request.POST)
+        learner_form = LearnerForm(data=request.POST)
+        if user_form.is_valid() and learner_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            learner = learner_form.save(commit=False)
+            learner.user = user
+            if 'picture' in request.FILES:
+                learner.picture = request.FILES['picture']
+            learner.save()
+            registered = True
+        else:
+            print(user_form.errors, learner_form.errors)
     else:
-        try:
-            user = User.objects.create(
-                username=username,
-                password=pwd
-            )
-        except IntegrityError:
-            error_message = 'User already exist.'
-            return HttpResponseRedirect(reverse('mords:signup', args=(error_message,)))
+        user_form = UserForm()
+        learner_form = LearnerForm()
 
-        return HttpResponseRedirect(reverse('mords:login',))
+    context = {
+        'user_form': user_form,
+        'learner_form': learner_form,
+        'registered': registered
+    }
+    return render(request,
+                  'mords/signup.html',
+                  context
+                  )
 
 
 def detail(request, word_text):

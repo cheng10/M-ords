@@ -1,14 +1,20 @@
-{% load static %}
+{% extends 'mords/base.html' %}
+{% load staticfiles %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'mords/style.css' %}" />
+{% block title_block %}
+    Index
+{% endblock %}
 
-{% if latest_note_list %}
-    <ul>
-        {% for note in latest_note_list %}
-        <!--<li><a href="/mords/{{ note.word.text }}/note/">{{ note.text }}</a></li>-->
-            <li><a href="{% url 'mords:detail' note.word.text %}">{{ note.text }}</a></li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No notes are available.</p>
-{% endif %}
+{% block body_block %}
+    <link rel="stylesheet" type="text/css" href="{% static 'mords/style.css' %}" />
+    {% if latest_note_list %}
+        <ul>
+            {% for note in latest_note_list %}
+            <!--<li><a href="/mords/{{ note.word.text }}/note/">{{ note.text }}</a></li>-->
+                <li><a href="{% url 'mords:detail' note.word.text %}">{{ note.text }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No notes are available.</p>
+    {% endif %}
+{% endblock %}

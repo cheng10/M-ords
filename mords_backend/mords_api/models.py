@@ -48,6 +48,7 @@ class Learner(models.Model):
     book = models.ForeignKey(Book, on_delete=models.SET_NULL, blank=False, null=True)
     words_perDay = models.PositiveIntegerField(default=0)
     words_finished = models.PositiveIntegerField(default=0)
+    pic = models.ImageField(upload_to='profile_images', blank=True)
 
     def __str__(self):
         return self.user.username
