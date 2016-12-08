@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views import generic
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from mords_api.models import Note, Word, Learner
 from forms import UserForm, LearnerForm
@@ -23,16 +24,6 @@ class IndexView(generic.ListView):
         return Note.objects.order_by('-pub_date')
         # return Note.objects.order_by('-pub_date')[:5]
         # return Note.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
-
-
-# def index(request):
-#     latest_note_list = Note.objects.order_by('-pub_date')[:5]
-#     # tempalte = loader.get_template('mords/index.html')
-#     context = {
-#         'latest_note_list': latest_note_list,
-#     }
-#     # return HttpResponse(tempalte.render(context, request))
-#     return render(request, 'mords/index.html', context)
 
 
 def signup(request):
@@ -65,6 +56,25 @@ def signup(request):
                   'mords/signup.html',
                   context
                   )
+
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('mords:index'))
+            else:
+                return HttpResponse("Your account is disabled.")
+        else:
+            print("Invalid login details: {0}, {1}".format(username, password))
+            return HttpResponse("Invalid login details supplied.")
+
+    else:
+        return render(request, 'mords/login.html', {})
 
 
 def detail(request, word_text):

@@ -246,6 +246,14 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
+
+                        {% if user.is_authenticated %}
+                            <li>howdy {{ user.username }}!</li>
+                        {% else %}
+                            <li><a href="{% url 'mords:login' %}"><i class="fa fa-user fa-fw"></i> login</a>
+                            </li>
+                        {% endif %}
+
                         <li><a href="{% url 'mords:signup' %}"><i class="fa fa-user fa-fw"></i> Sign Up</a>
                         </li>
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
