@@ -44,11 +44,12 @@ class Command(BaseCommand):
                 except Exception as e:
                     print(e)
                 else:
+                    explains = '\n'.join(basic["explains"])
                     entry, e_created = Entry.objects.get_or_create(
                         word=word,
                         book=book,
                         defaults={'update_date': timezone.now(),
-                                  'defn': basic["explains"][0]
+                                  'defn': explains
                                   },
                     )
                     word.update_date = timezone.now()

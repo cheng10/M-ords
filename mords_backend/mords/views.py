@@ -29,10 +29,10 @@ class IndexView(generic.ListView):
 
 class NewView(generic.ListView):
     template_name = 'mords/new.html'
-    context_object_name = 'latest_entry_list'
+    context_object_name = 'latest_word_list'
 
     def get_queryset(self):
-        return Entry.objects.filter(update_date__lte=timezone.now()+timedelta(days=1))
+        return Word.objects.filter(update_date__lte=timezone.now()+timedelta(days=1))
 
 
 def signup(request):

@@ -9,10 +9,10 @@
 
     <h1 class="page-header">Today's New Words</h1>
 
-    {% if latest_entry_list %}
+    {% if latest_word_list %}
         <ul>
-            {% for entry in latest_entry_list %}
-                <li><a href="{% url 'mords:detail' entry.word.text %}">{{ entry.word.text }}</a></li>
+            {% for word in latest_word_list %}
+                <li><a href="{% url 'mords:detail' word.text %}">{{ word.text }}</a></li>
                 <!--<li>{{ entry.defn }}</li>-->
                 <!--<li>{{ entry.exmp }}</li>-->
             {% endfor %}

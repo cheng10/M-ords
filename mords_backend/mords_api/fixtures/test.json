@@ -55,7 +55,7 @@
     "pk": 1,
     "fields":
     {
-      "text": 1,
+      "word": 1,
       "defn": "apple definition",
       "exmp": "apple example",
       "book": 1
@@ -66,7 +66,7 @@
     "pk": 2,
     "fields":
     {
-      "text": 2,
+      "word": 2,
       "defn": "banana definition",
       "exmp": "banana example",
       "book": 2
