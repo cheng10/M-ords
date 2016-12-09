@@ -8,7 +8,8 @@ from django.utils.encoding import python_2_unicode_compatible
 
 @python_2_unicode_compatible
 class Word(models.Model):
-    text = models.CharField(max_length=200)
+    text = models.CharField(max_length=200, unique=True)
+    update_date = models.DateField(default=timezone.now())
     pron = models.CharField(max_length=200, default='',
                             help_text="pronunciation of the word")
 
