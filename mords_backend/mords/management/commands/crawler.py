@@ -63,16 +63,19 @@ class Command(BaseCommand):
 
             # print(words[i], meaning, example)
 
-            book, created = Book.objects.get_or_create(name='urban_dic_new')
+            book, created = Book.objects.get_or_create(name='urban_dic_new',
+                                                       defaults={'update_date': timezone.now()},
+                                                       )
             word, created = Word.objects.get_or_create(text=words[i],
                                                        defaults={'update_date': timezone.now()},
                                                        )
             entry, e_created = Entry.objects.get_or_create(
                 word=word,
-                defn=meaning,
-                exmp=example,
                 book=book,
-                defaults={'update_date': timezone.now()},
+                defaults={'update_date': timezone.now(),
+                          'defn': meaning,
+                          'exmp': example
+                          },
             )
 
             if e_created:

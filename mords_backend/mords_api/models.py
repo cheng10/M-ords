@@ -9,9 +9,11 @@ from django.utils.encoding import python_2_unicode_compatible
 @python_2_unicode_compatible
 class Word(models.Model):
     text = models.CharField(max_length=200, unique=True)
-    update_date = models.DateField(default=timezone.now())
+    update_date = models.DateField(null=True)
     pron = models.CharField(max_length=200, default='',
                             help_text="pronunciation of the word")
+    us_pho = models.CharField(max_length=200, default='')
+    uk_pho = models.CharField(max_length=200, default='')
 
     def __str__(self):
         return self.text
@@ -37,8 +39,8 @@ class Book(models.Model):
 @python_2_unicode_compatible
 class Entry(models.Model):
     word = models.ForeignKey(Word, on_delete=models.CASCADE)
-    defn = models.TextField()
-    exmp = models.TextField()
+    defn = models.TextField(default='')
+    exmp = models.TextField(default='')
     update_date = models.DateField(null=True)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
 
