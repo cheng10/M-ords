@@ -9,6 +9,8 @@ from django.utils.encoding import python_2_unicode_compatible
 @python_2_unicode_compatible
 class Word(models.Model):
     text = models.CharField(max_length=200)
+    pron = models.CharField(max_length=200, default='',
+                            help_text="pronunciation of the word")
 
     def __str__(self):
         return self.text

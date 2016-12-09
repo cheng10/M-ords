@@ -65,18 +65,18 @@ class Command(BaseCommand):
 
             book, created = Book.objects.get_or_create(name='urban_dic_new')
             word, created = Word.objects.get_or_create(text=words[i])
-            entry, created = Entry.objects.get_or_create(
+            entry, e_created = Entry.objects.get_or_create(
                 word=word,
                 defn=meaning,
                 exmp=example,
-                update_date=timezone.now(),
                 book=book
             )
+            entry.update_date = timezone.now()
             entry.save()
-            if created:
+            if e_created:
                 print('Entry '+entry.word.text+' created, '+str(i)+' of '+str(len(words)))
             else:
-                print('Entry '+entry.word.text+' already exists, '+str(i)+' of '+str(len(words)))
+                print('Entry '+entry.word.text+' updated, '+str(i)+' of '+str(len(words)))
 
         book, created = Book.objects.get_or_create(name='urban_dic_new')
         book.update_date = timezone.now()

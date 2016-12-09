@@ -19,20 +19,34 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs">
                 {% for entry in word.entry_set.all %}
-                <li class="active"><a href="#home" data-toggle="tab" aria-expanded="true">{{ entry.book }}</a>
+                {% if forloop.counter < 2 %}
+                <li class="active"><a href="#{{ entry.book }}" data-toggle="tab" aria-expanded="true">{{ entry.book }}</a>
                 </li>
+                {% else %}
+                <li><a href="#{{ entry.book }}" data-toggle="tab" aria-expanded="true">{{ entry.book }}</a>
+                </li>
+                {% endif %}
                 {% endfor %}
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content">
                 {% for entry in word.entry_set.all %}
+                {% if forloop.counter < 2 %}
                 <div class="tab-pane fade active in" id="{{ entry.book }}">
                     <h4>Definition:</h4>
                     <p>{{ entry.defn }}</p>
                     <h4>Example: </h4>
                     <p>{{ entry.exmp }}</p>
                 </div>
+                {% else %}
+                <div class="tab-pane fade" id="{{ entry.book }}">
+                    <h4>Definition:</h4>
+                    <p>{{ entry.defn }}</p>
+                    <h4>Example: </h4>
+                    <p>{{ entry.exmp }}</p>
+                </div>
+                {% endif %}
                 {% endfor %}
             </div>
         </div>
@@ -45,7 +59,8 @@
         </div>
         <div class="panel-body">
             {% for note in notes %}
-            <p>{{ note.text }} -- by {{note.author}}</p>
+            <p>{{ note.text }} by {{note.author}} on {{note.pub_date}}</p>
+            <hr/>
             {% endfor %}
         </div>
     </div>
