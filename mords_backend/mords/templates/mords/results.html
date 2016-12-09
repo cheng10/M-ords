@@ -9,11 +9,60 @@
 
     <h1 class="page-header">{{ word.text }}</h1>
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-    <ul>
-        {% for note in word.note_set.all %}
-        <li>{{ note.text }} -- by {{note.author}}</li>
-        {% endfor %}
-    </ul>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Dictionary
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+                {% for entry in word.entry_set.all %}
+                <li class="active"><a href="#home" data-toggle="tab" aria-expanded="true">{{ entry.book }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                {% for entry in word.entry_set.all %}
+                <div class="tab-pane fade active in" id="{{ entry.book }}">
+                    <h4>Definition:</h4>
+                    <p>{{ entry.defn }}</p>
+                    <h4>Example: </h4>
+                    <p>{{ entry.exmp }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- /.panel-body -->
+    </div>
+
+    <!--<div class="panel panel-primary">-->
+        <!--<div class="panel-heading">-->
+            <!--Definition-->
+        <!--</div>-->
+        <!--<div class="panel-body">-->
+            <!--{% for entry in word.entry_set.all %}-->
+            <!--<li>{{ entry.defn }}</li>-->
+            <!--<li>{{ entry.exmp }}</li>-->
+            <!--<li>{{ entry.book }}</li>-->
+            <!--{% endfor %}-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Notes
+        </div>
+        <div class="panel-body">
+            {% for note in word.note_set.all %}
+            <p>{{ note.text }} -- by {{note.author}}</p>
+            {% endfor %}
+        </div>
+    </div>
+
     <a href="{% url 'mords:detail' word.text %}">Comment again?</a>
 
 {% endblock %}

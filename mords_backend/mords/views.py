@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.db import IntegrityError
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
@@ -7,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from mords_api.models import Note, Word, Learner
+from mords_api.models import Note, Word, Learner, Entry
 from forms import UserForm, LearnerForm, PasswordForm
 
 
@@ -24,6 +25,14 @@ class IndexView(generic.ListView):
         return Note.objects.order_by('-pub_date')
         # return Note.objects.order_by('-pub_date')[:5]
         # return Note.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+
+
+class NewView(generic.ListView):
+    template_name = 'mords/new.html'
+    context_object_name = 'latest_entry_list'
+
+    def get_queryset(self):
+        return Entry.objects.filter(update_date__lte=timezone.now()+timedelta(days=1))
 
 
 def signup(request):

@@ -33,13 +33,17 @@ class Book(models.Model):
 
 @python_2_unicode_compatible
 class Entry(models.Model):
-    text = models.CharField(max_length=200)
+    word = models.ForeignKey(Word, on_delete=models.CASCADE)
     defn = models.TextField()
     exmp = models.TextField()
+    update_date = models.DateField(null=True)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.text
+        return self.word.text
+
+    class Meta:
+        ordering = ['word']
 
 
 @python_2_unicode_compatible

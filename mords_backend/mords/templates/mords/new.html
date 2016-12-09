@@ -1,0 +1,23 @@
+{% extends 'mords/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    New Words
+{% endblock %}
+
+{% block body_block %}
+
+    <h1 class="page-header">Today's New Words</h1>
+
+    {% if latest_entry_list %}
+        <ul>
+            {% for entry in latest_entry_list %}
+                <li><a href="{% url 'mords:detail' entry.word.text %}">{{ entry.word.text }}</a></li>
+                <!--<li>{{ entry.defn }}</li>-->
+                <!--<li>{{ entry.exmp }}</li>-->
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No new entries are available.</p>
+    {% endif %}
+{% endblock %}
