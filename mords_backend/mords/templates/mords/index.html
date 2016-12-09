@@ -7,7 +7,11 @@
 
 {% block body_block %}
 
+    {% if user.is_authenticated %}
     <h1 class="page-header">Hi, {{ user.username }}</h1>
+    {% else %}
+    <h1 class="page-header">Welcome</h1>
+    {% endif %}
 
     {% if latest_note_list %}
         <ul>

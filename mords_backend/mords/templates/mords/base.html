@@ -249,7 +249,7 @@
 
                         {% if user.is_authenticated %}
                         <li >hi, {{ user.username }}!</li>
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a href="{% url 'mords:profile' %}"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
@@ -385,6 +385,14 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
+
+                        {% if info %}
+                        <div class="alert alert-info alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <a href="#" class="alert-link">{{ info }}</a>.
+                        </div>
+                        {% endif %}
+
                         {% block body_block %}
                             This is body_block's default content.
                         {% endblock %}

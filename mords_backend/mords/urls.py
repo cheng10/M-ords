@@ -1,5 +1,7 @@
 from django.conf.urls import url
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'mords'
 urlpatterns = [
@@ -7,6 +9,8 @@ urlpatterns = [
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^accounts/login/$', views.user_login, name='login'),
+    url(r'^profile/$', views.update_profile, name='profile'),
+    url(r'^update_password/$', views.update_password, name='password'),
     # url(r'^$', views.index, name='index'),
     # url(r'^(?P<word_text>[a-z]+)/$', views.DetailView.as_view, name='detail'),
     # url(r'^(?P<word_text>[a-z]+)/results/$', views.ResultsView.as_view, name='results'),
@@ -16,4 +20,4 @@ urlpatterns = [
     url(r'^word/(?P<word_text>[a-z]+)/note/$', views.note, name='note'),
     url(r'^word/(?P<word_text>[a-z]+)/know/$', views.know, name='know'),
     url(r'^latest_notes/$', views.latest_notes, name='latest_notes'),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

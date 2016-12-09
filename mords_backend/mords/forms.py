@@ -13,6 +13,14 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password')
 
 
+class PasswordForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('password',)
+
+
 class LearnerForm(forms.ModelForm):
 
     class Meta:

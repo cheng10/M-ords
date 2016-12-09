@@ -7,26 +7,56 @@
 
 {% block body_block %}
 
-    <div class="panel-heading">
-        <h3 class="panel-title">Profile</h3>
+<div class="panel panel-info">
+    <div class="panel-heading">Profile</div>
+    <div class="panel-body">
+        <p>
+            <label>Book:</label>
+            {{ learner.book }}
+        </p>
+        <p>
+            <label>Words perDay:</label>
+            {{ learner.words_perDay }}
+        </p>
+        <p>
+            <label>Profile Picture:</label>
+            <img src="../media/{{learner.pic }}"/>
+        </p>
     </div>
-    {% if registered %}
-        <div class="panel-body">
-            <strong>thank you for registering!</strong>
-            <a href="{% url 'mords:index' %}">Return to the homepage.</a><br />
-        </div>
-    {% else %}
-        <div class="panel-body">
-            <form role="form" id="user_form" method="post" action="{% url 'mords:signup' %}"
-            enctype="multipart/form-data">
-                <fieldset>
-                    {% csrf_token %}
-                    {{ user_form.as_p }}
-                    {{ learner_form.as_p }}
-                    <input type="submit" name="submit" value="Signup" class="btn btn-lg btn-success btn-block"/>
-                </fieldset>
-            </form>
-        </div>
-    {% endif %}
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Update Profile</h3>
+    </div>
+
+    <div class="panel-body">
+        <form role="form" id="learner_form" method="post" action="{% url 'mords:profile' %}"
+        enctype="multipart/form-data">
+            <fieldset>
+                {% csrf_token %}
+                {{ learner_form.as_p }}
+                <input type="submit" name="submit" value="Update" class="btn  btn-success "/>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Update Password</h3>
+    </div>
+
+    <div class="panel-body">
+        <form role="form" id="password_form" method="post" action="{% url 'mords:password' %}">
+            <fieldset>
+                {% csrf_token %}
+                {{ password_form.as_p }}
+                <input type="submit" name="submit" value="Update" class="btn  btn-success "/>
+            </fieldset>
+        </form>
+    </div>
+</div>
+
 
 {% endblock %}
