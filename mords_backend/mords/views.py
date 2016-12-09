@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from mords_api.models import Note, Word, Learner, Entry
+from mords_api.models import Note, Word, Learner, Entry, Book
 from forms import UserForm, LearnerForm, PasswordForm
 
 
@@ -168,6 +168,18 @@ def detail(request, word_text):
         'notes': notes
     }
     return render(request, 'mords/detail.html', context)
+
+
+def book_detail(request, book_name):
+    book = get_object_or_404(Book, name=book_name)
+    entrys = book.entry_set.all()
+    # notes = word.note_set.all().filter(pub_date__lte=timezone.now())
+    context = {
+        'book': book,
+        'entrys': entrys
+    }
+    return render(request, 'mords/book_detail.html', context)
+    # return HttpResponse(reverse('mords:book_detail'))
 
 
 @login_required

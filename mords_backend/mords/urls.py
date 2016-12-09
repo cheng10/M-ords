@@ -15,6 +15,7 @@ urlpatterns = [
     # url(r'^$', views.index, name='index'),
     # url(r'^(?P<word_text>[a-z]+)/$', views.DetailView.as_view, name='detail'),
     # url(r'^(?P<word_text>[a-z]+)/results/$', views.ResultsView.as_view, name='results'),
+    url(r'^book/(?P<book_name>[a-zA-Z0-9\'\-\.\!_ ]+)/$', views.book_detail, name='book_detail'),
     url(r'^word/(?P<word_text>[a-zA-Z0-9\'\-\.\! ]+)/$', views.detail, name='detail'),
     url(r'^word/(?P<word_text>[a-zA-Z0-9\'\-\.\! ]+)/results/$', views.results, name='results'),
     url(r'^word/(?P<word_text>[a-zA-Z0-9\'\-\.\! ]+)/comment/$', views.comment, name='comment'),

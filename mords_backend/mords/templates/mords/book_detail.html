@@ -1,0 +1,22 @@
+{% extends 'mords/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Index
+{% endblock %}
+
+{% block body_block %}
+
+    <h1 class="page-header">{{ book.name }}</h1>
+
+    {% if entrys %}
+        <ul>
+            {% for entry in entrys %}
+            <!--<li><a href="/mords/{{ note.word.text }}/note/">{{ note.text }}</a></li>-->
+                <li><a href="{% url 'mords:detail' entry.word.text %}">{{ entry.word.text }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No words are available.</p>
+    {% endif %}
+{% endblock %}

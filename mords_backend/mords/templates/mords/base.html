@@ -293,6 +293,19 @@
                             <a href="{% url 'mords:new' %}"><i class="fa fa-clock-o fa-fw"></i>New Words</a>
                         </li>
 
+                        <li class="active">
+                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Vocabulary Books<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse in" aria-expanded="true">
+                                <li>
+                                    <a href="{% url 'mords:book_detail' 'youdao' %}">youdao</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'mords:book_detail' 'urban_dic_new' %}">urban_dic_new</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

@@ -14,7 +14,7 @@ class Command(BaseCommand):
                                                    defaults={'update_date': timezone.now()},
                                                    )
         words = Word.objects.all()
-        for word in words:
+        for i, word in enumerate(words):
             text = word.text
             url = 'http://fanyi.youdao.com/openapi.do?keyfrom=ZedWord&key=1257551139&type=data&doctype=json&version=1.1&q='
             url += text
@@ -27,7 +27,7 @@ class Command(BaseCommand):
             # pprint(r.json())
             if r.json()["basic"]:
                 basic = r.json()["basic"]
-                pprint(basic)
+                # pprint(basic)
 
                 try:
                     word.us_pho = basic["us-phonetic"]
@@ -45,6 +45,7 @@ class Command(BaseCommand):
                     print(e)
                 else:
                     explains = '\n'.join(basic["explains"])
+                    print(explains)
                     entry, e_created = Entry.objects.get_or_create(
                         word=word,
                         book=book,
@@ -52,6 +53,15 @@ class Command(BaseCommand):
                                   'defn': explains
                                   },
                     )
+
+                    if e_created:
+                        print('Entry ' + entry.word.text + ' created, ' + str(i) + ' of ' + str(len(words)))
+                    else:
+                        entry.defn = explains
+                        entry.update_date = timezone.now()
+                        entry.save()
+                        print('Entry ' + entry.word.text + ' updated, ' + str(i) + ' of ' + str(len(words)))
+
                     word.update_date = timezone.now()
                     word.save()
                     book.update_date = timezone.now()

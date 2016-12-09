@@ -81,6 +81,9 @@ class Command(BaseCommand):
             if e_created:
                 print('Entry '+entry.word.text+' created, '+str(i)+' of '+str(len(words)))
             else:
+                entry.defn = meaning
+                entry.update_date = timezone.now()
+                entry.save()
                 print('Entry '+entry.word.text+' updated, '+str(i)+' of '+str(len(words)))
 
         book, created = Book.objects.get_or_create(name='urban_dic_new')
