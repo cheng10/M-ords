@@ -22,3 +22,4 @@
 # m h  dom mon dow   command
 
 0 23 * * * cd /home/ubuntu/M-ords/mords_backend/scripts; ./run_crawler.sh >> /home/ubuntu/M-ords/mords_backend/scripts/crawler.log 2>&1
+0 3 * * 1 cd /home/ubuntu/M-ords/mords_backend/scripts; ./clean.sh
