@@ -7,22 +7,29 @@
 
 {% block body_block %}
 
-    <h1>{{ word.text }}</h1>
+    <h1 class="page-header">{{ word.text }}</h1>
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
     <ul>
         {% for note in notes %}
-        <li>{{ note.text }}</li>
+        <li>{{ note.text }} -- by {{note.author}}</li>
         {% endfor %}
     </ul>
+
+    <hr/>
 
     <form action="{% url 'mords:comment' word.text %}" method="post">
     {% csrf_token %}
     <!--{% for note in notes %}-->
         <!--<label for="note{{ forloop.counter }}">{{ note.text }}</label><br />-->
     <!--{% endfor %}-->
-        <input type="text" name="note" id="note{{ forloop.counter }}" value="{{ note.text }}" />
-        <input type="submit" value="Comment" />
+        <div class="form-group">
+            <textarea type="text" name="note" id="note{{ forloop.counter }}" value="{{ note.text }}"
+            class="form-control">
+            </textarea>
+            <input type="submit" value="Comment" class="btn btn-default"/>
+        </div>
+
     </form>
 
 {% endblock %}

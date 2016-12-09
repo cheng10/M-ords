@@ -7,11 +7,11 @@
 
 {% block body_block %}
 
-    <h1>{{ word.text }}</h1>
+    <h1 class="page-header">{{ word.text }}</h1>
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
     <ul>
         {% for note in word.note_set.all %}
-        <li>{{ note.text }}</li>
+        <li>{{ note.text }} -- by {{note.author}}</li>
         {% endfor %}
     </ul>
     <a href="{% url 'mords:detail' word.text %}">Comment again?</a>

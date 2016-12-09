@@ -1,0 +1,32 @@
+{% extends 'mords/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Detail
+{% endblock %}
+
+{% block body_block %}
+
+    <div class="panel-heading">
+        <h3 class="panel-title">Profile</h3>
+    </div>
+    {% if registered %}
+        <div class="panel-body">
+            <strong>thank you for registering!</strong>
+            <a href="{% url 'mords:index' %}">Return to the homepage.</a><br />
+        </div>
+    {% else %}
+        <div class="panel-body">
+            <form role="form" id="user_form" method="post" action="{% url 'mords:signup' %}"
+            enctype="multipart/form-data">
+                <fieldset>
+                    {% csrf_token %}
+                    {{ user_form.as_p }}
+                    {{ learner_form.as_p }}
+                    <input type="submit" name="submit" value="Signup" class="btn btn-lg btn-success btn-block"/>
+                </fieldset>
+            </form>
+        </div>
+    {% endif %}
+
+{% endblock %}

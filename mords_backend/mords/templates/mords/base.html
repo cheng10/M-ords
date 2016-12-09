@@ -248,21 +248,23 @@
                     <ul class="dropdown-menu dropdown-user">
 
                         {% if user.is_authenticated %}
-                            <li>howdy {{ user.username }}!</li>
-                        {% else %}
-                            <li><a href="{% url 'mords:login' %}"><i class="fa fa-user fa-fw"></i> login</a>
-                            </li>
-                        {% endif %}
-
-                        <li><a href="{% url 'mords:signup' %}"><i class="fa fa-user fa-fw"></i> Sign Up</a>
-                        </li>
+                        <li >hi, {{ user.username }}!</li>
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
-                        <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        {% else %}
+                        <li><a href="{% url 'mords:login' %}"><i class="fa fa-user fa-fw"></i> Login</a>
                         </li>
+                        <li><a href="{% url 'mords:signup' %}"><i class="fa fa-user fa-fw"></i> Sign Up</a>
+                        </li>
+                        {% endif %}
+
+                        {% if user.is_authenticated %}
+                        <li class="divider"></li>
+                        <li><a href="{% url 'mords:logout' %}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                        {% endif %}
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>

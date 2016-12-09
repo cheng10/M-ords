@@ -5,7 +5,7 @@ from django.utils import timezone
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views import generic
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from mords_api.models import Note, Word, Learner
 from forms import UserForm, LearnerForm
@@ -75,6 +75,12 @@ def user_login(request):
 
     else:
         return render(request, 'mords/login.html', {})
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('mords:index'))
 
 
 def detail(request, word_text):

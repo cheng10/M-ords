@@ -6,12 +6,14 @@
 {% endblock %}
 
 {% block body_block %}
-    <link rel="stylesheet" type="text/css" href="{% static 'mords/style.css' %}" />
+
+    <h1 class="page-header">Hi, {{ user.username }}</h1>
+
     {% if latest_note_list %}
         <ul>
             {% for note in latest_note_list %}
             <!--<li><a href="/mords/{{ note.word.text }}/note/">{{ note.text }}</a></li>-->
-                <li><a href="{% url 'mords:detail' note.word.text %}">{{ note.text }}</a></li>
+                <li><a href="{% url 'mords:detail' note.word.text %}">{{ note.text }} -- by {{note.author}}</a></li>
             {% endfor %}
         </ul>
     {% else %}
