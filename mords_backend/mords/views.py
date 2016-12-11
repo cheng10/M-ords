@@ -8,31 +8,65 @@ from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from mords_api.models import Note, Word, Learner, Entry, Book
 from forms import UserForm, LearnerForm, PasswordForm
 
 
-class IndexView(generic.ListView):
-    template_name = 'mords/index.html'
-    context_object_name = 'latest_note_list'
+def index(request):
+    latest_note_list = Note.objects.order_by('-pub_date')
+    paginator = Paginator(latest_note_list, 25)  # Show 25 words per page
 
-    def get_queryset(self):
-        """
-        Return the last five published notes (not including those set to be
-        published in the future).
+    page = request.GET.get('page')
+    try:
+        notes = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        notes = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        notes = paginator.page(paginator.num_pages)
 
-        """
-        return Note.objects.order_by('-pub_date')
-        # return Note.objects.order_by('-pub_date')[:5]
-        # return Note.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+    return render(request, 'mords/index.html', {'latest_note_list': notes})
 
 
-class NewView(generic.ListView):
-    template_name = 'mords/new.html'
-    context_object_name = 'latest_word_list'
+# class IndexView(generic.ListView):
+#     template_name = 'mords/index.html'
+#     context_object_name = 'latest_note_list'
+#
+#     def get_queryset(self):
+#         """
+#         Return the last five published notes (not including those set to be
+#         published in the future).
+#
+#         """
+#         return Note.objects.order_by('-pub_date')
+#         # return Note.objects.order_by('-pub_date')[:5]
+#         # return Note.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
 
-    def get_queryset(self):
-        return Word.objects.filter(update_date__lte=timezone.now()+timedelta(days=1))
+
+def new(request):
+    latest_word_list = Word.objects.filter(update_date__lte=timezone.now()+timedelta(days=1))
+    paginator = Paginator(latest_word_list, 25)  # Show 25 words per page
+
+    page = request.GET.get('page')
+    try:
+        words = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        words = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        words = paginator.page(paginator.num_pages)
+
+    return render(request, 'mords/new.html', {'latest_word_list': words})
+
+# class NewView(generic.ListView):
+#     template_name = 'mords/new.html'
+#     context_object_name = 'latest_word_list'
+#
+#     def get_queryset(self):
+#         return Word.objects.filter(update_date__lte=timezone.now()+timedelta(days=1))
 
 
 def signup(request):
@@ -174,6 +208,18 @@ def book_detail(request, book_name):
     book = get_object_or_404(Book, name=book_name)
     entrys = book.entry_set.all()
     # notes = word.note_set.all().filter(pub_date__lte=timezone.now())
+    paginator = Paginator(entrys, 25)  # Show 25 entrys per page
+
+    page = request.GET.get('page')
+    try:
+        entrys = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        entrys = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        entrys = paginator.page(paginator.num_pages)
+
     context = {
         'book': book,
         'entrys': entrys

@@ -19,4 +19,21 @@
     {% else %}
         <p>No words are available.</p>
     {% endif %}
+
+    <hr/>
+    <div class="pagination">
+    <span class="step-links">
+        {% if entrys.has_previous %}
+            <a href="?page={{ entrys.previous_page_number }}"> < </a>
+        {% endif %}
+        <span class="current">
+            Page {{ entrys.number }} of {{ entrys.paginator.num_pages }}.
+        </span>
+        {% if entrys.has_next %}
+            <a href="?page={{ entrys.next_page_number }}"> > </a>
+        {% endif %}
+    </span>
+    </div>
+    <hr/>
+
 {% endblock %}

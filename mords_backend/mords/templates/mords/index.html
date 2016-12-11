@@ -23,4 +23,21 @@
     {% else %}
         <p>No notes are available.</p>
     {% endif %}
+
+    <hr/>
+    <div class="pagination">
+    <span class="step-links">
+        {% if latest_note_list.has_previous %}
+            <a href="?page={{ latest_note_list.previous_page_number }}"> < </a>
+        {% endif %}
+        <span class="current">
+            Page {{ latest_note_list.number }} of {{ latest_note_list.paginator.num_pages }}.
+        </span>
+        {% if latest_note_list.has_next %}
+            <a href="?page={{ latest_note_list.next_page_number }}"> > </a>
+        {% endif %}
+    </span>
+    </div>
+    <hr/>
+
 {% endblock %}

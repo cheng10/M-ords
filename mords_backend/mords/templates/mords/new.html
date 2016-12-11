@@ -20,4 +20,21 @@
     {% else %}
         <p>No new entries are available.</p>
     {% endif %}
+
+    <hr/>
+    <div class="pagination">
+    <span class="step-links">
+        {% if latest_word_list.has_previous %}
+            <a href="?page={{ latest_word_list.previous_page_number }}"> < </a>
+        {% endif %}
+        <span class="current">
+            Page {{ latest_word_list.number }} of {{ latest_word_list.paginator.num_pages }}.
+        </span>
+        {% if latest_word_list.has_next %}
+            <a href="?page={{ latest_word_list.next_page_number }}"> > </a>
+        {% endif %}
+    </span>
+    </div>
+    <hr/>
+
 {% endblock %}

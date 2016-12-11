@@ -5,8 +5,10 @@ from django.conf.urls.static import static
 
 app_name = 'mords'
 urlpatterns = [
-    url(r'^$', views.IndexView.as_view(), name='index'),
-    url(r'^new/$', views.NewView.as_view(), name='new'),
+    # url(r'^$', views.IndexView.as_view(), name='index'),
+    # url(r'^new/$', views.NewView.as_view(), name='new'),
+    url(r'^$', views.index, name='index'),
+    url(r'^new/$', views.new, name='new'),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^accounts/login/$', views.user_login, name='login'),
