@@ -20,21 +20,32 @@
         <p>No words are available.</p>
     {% endif %}
 
-    {% if entrys.paginator.num_pages > 1%}
-    <hr/>
-    <div class="pagination">
-    <span class="step-links">
+    {% if entrys.paginator.num_pages > 1 %}
+    <ul class="pagination">
+        {% if entrys.number > 1 %}
+        <li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+            <a href="?page=1">1 <<</a>
+        </li>
+        {% endif %}
         {% if entrys.has_previous %}
-            <a href="?page={{ entrys.previous_page_number }}"> < </a>
+        <li class="paginate_button previous" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous">
+            <a href="?page={{ entrys.previous_page_number }}"><</a>
+        </li>
         {% endif %}
-        <span class="current">
-            Page {{ entrys.number }} of {{ entrys.paginator.num_pages }}.
-        </span>
+        <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0">
+            <a href="#">{{entrys.number}}</a>
+        </li>
         {% if entrys.has_next %}
-            <a href="?page={{ entrys.next_page_number }}"> > </a>
+        <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next">
+            <a href="?page={{ entrys.next_page_number }}"> ></a>
+        </li>
         {% endif %}
-    </span>
-    </div>
+        {% if entrys.number < entrys.paginator.num_pages %}
+        <li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+            <a href="?page={{ entrys.paginator.num_pages }}">>> {{ entrys.paginator.num_pages }}</a>
+        </li>
+        {% endif %}
+    </ul>
     {% endif %}
 
 {% endblock %}
