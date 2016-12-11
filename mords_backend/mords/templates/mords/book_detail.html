@@ -20,6 +20,7 @@
         <p>No words are available.</p>
     {% endif %}
 
+    {% if entrys.paginator.num_pages > 1%}
     <hr/>
     <div class="pagination">
     <span class="step-links">
@@ -34,6 +35,6 @@
         {% endif %}
     </span>
     </div>
-    <hr/>
+    {% endif %}
 
 {% endblock %}

@@ -24,6 +24,7 @@
         <p>No notes are available.</p>
     {% endif %}
 
+    {% if latest_note_list.paginator.num_pages > 1 %}
     <hr/>
     <div class="pagination">
     <span class="step-links">
@@ -38,6 +39,6 @@
         {% endif %}
     </span>
     </div>
-    <hr/>
+    {% endif %}
 
 {% endblock %}

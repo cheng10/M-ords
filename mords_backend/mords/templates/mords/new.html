@@ -21,6 +21,7 @@
         <p>No new entries are available.</p>
     {% endif %}
 
+    {% if latest_word_list.paginator.num_pages > 1 %}
     <hr/>
     <div class="pagination">
     <span class="step-links">
@@ -35,6 +36,6 @@
         {% endif %}
     </span>
     </div>
-    <hr/>
+    {% endif %}
 
 {% endblock %}
