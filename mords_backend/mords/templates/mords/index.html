@@ -17,7 +17,10 @@
         <ul>
             {% for note in latest_note_list %}
             <!--<li><a href="/mords/{{ note.word.text }}/note/">{{ note.text }}</a></li>-->
-                <li><a href="{% url 'mords:detail' note.word.text %}">{{ note.text }} -- by {{note.author}}</a></li>
+                <li><a href="{% url 'mords:detail' note.word.text %}">
+                    {{ note.text }}
+                    <small>by {{note.author}}</small>
+                </a></li>
             {% endfor %}
         </ul>
     {% else %}

@@ -9,6 +9,9 @@
 
     <h1 class="page-header">{{ book.name }}</h1>
 
+    <blockquote><p class="text-muted">updated on: {{book.update_date}}</p></blockquote>
+
+
     {% if entrys %}
         <ul>
             {% for entry in entrys %}

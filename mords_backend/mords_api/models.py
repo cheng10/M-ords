@@ -49,7 +49,7 @@ class Entry(models.Model):
         return self.word.text
 
     class Meta:
-        ordering = ['-update_date']
+        ordering = ['word']
 
 
 @python_2_unicode_compatible

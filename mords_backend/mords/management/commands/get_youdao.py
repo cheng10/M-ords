@@ -13,6 +13,7 @@ class Command(BaseCommand):
                                                    defaults={'update_date': timezone.now()},
                                                    )
         words = Word.objects.filter(is_info_get=False)
+        print(str(len(words))+" words to process")
         query_times = 0
         for i, word in enumerate(words):
             text = word.text
@@ -22,6 +23,8 @@ class Command(BaseCommand):
                 raise CommandError('Exceeding the hourly query limit of 1000, aborting.')
             r = requests.get(url)
             query_times += 1
+            word.is_info_get = True
+            word.save()
             try:
                 r.json()["basic"]
             except Exception as e:
@@ -75,7 +78,6 @@ class Command(BaseCommand):
                             print(e)
 
                     word.update_date = timezone.now()
-                    word.is_info_get = True
                     word.save()
                     book.update_date = timezone.now()
                     book.save()

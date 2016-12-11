@@ -63,7 +63,11 @@
         </div>
         <div class="panel-body">
             {% for note in notes %}
-            <p>{{ note.text }} by {{note.author}} on {{note.pub_date}}</p>
+            <p>{{ note.text }}
+                <small>
+                    by {{note.author}} on {{note.pub_date}}
+                </small>
+            </p>
             <hr/>
             {% endfor %}
         </div>
