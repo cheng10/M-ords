@@ -13,7 +13,7 @@ class Command(BaseCommand):
         book, created = Book.objects.get_or_create(name='youdao',
                                                    defaults={'update_date': timezone.now()},
                                                    )
-        words = Word.objects.all()
+        words = Word.objects.filter(is_info_get=False)
         for i, word in enumerate(words):
             text = word.text
             url = 'http://fanyi.youdao.com/openapi.do?keyfrom=ZedWord&key=1257551139&type=data&doctype=json&version=1.1&q='
@@ -72,6 +72,7 @@ class Command(BaseCommand):
                             print(e)
 
                     word.update_date = timezone.now()
+                    word.is_info_get = True
                     word.save()
                     book.update_date = timezone.now()
                     book.save()

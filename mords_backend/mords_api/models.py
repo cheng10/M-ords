@@ -14,6 +14,7 @@ class Word(models.Model):
                             help_text="pronunciation of the word")
     us_pho = models.CharField(max_length=200, default='')
     uk_pho = models.CharField(max_length=200, default='')
+    is_info_get = models.BooleanField(default=False)
 
     def __str__(self):
         return self.text
