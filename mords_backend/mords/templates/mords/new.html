@@ -21,21 +21,34 @@
         <p>No new entries are available.</p>
     {% endif %}
 
+
     {% if latest_word_list.paginator.num_pages > 1 %}
-    <hr/>
-    <div class="pagination">
-    <span class="step-links">
+    <ul class="pagination">
+        {% if latest_word_list.number > 1 %}
+        <li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+            <a href="?page=1">1 <<</a>
+        </li>
+        {% endif %}
         {% if latest_word_list.has_previous %}
-            <a href="?page={{ latest_word_list.previous_page_number }}"> < </a>
+        <li class="paginate_button previous" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous">
+            <a href="?page={{ latest_word_list.previous_page_number }}"><</a>
+        </li>
         {% endif %}
-        <span class="current">
-            Page {{ latest_word_list.number }} of {{ latest_word_list.paginator.num_pages }}.
-        </span>
+        <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0">
+            <a href="#">{{latest_word_list.number}}</a>
+        </li>
         {% if latest_word_list.has_next %}
-            <a href="?page={{ latest_word_list.next_page_number }}"> > </a>
+        <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next">
+            <a href="?page={{ latest_word_list.next_page_number }}"> ></a>
+        </li>
         {% endif %}
-    </span>
-    </div>
+        {% if latest_word_list.number < latest_word_list.paginator.num_pages %}
+        <li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+            <a href="?page={{ latest_word_list.paginator.num_pages }}">>> {{ latest_word_list.paginator.num_pages }}</a>
+        </li>
+        {% endif %}
+    </ul>
     {% endif %}
+
 
 {% endblock %}
