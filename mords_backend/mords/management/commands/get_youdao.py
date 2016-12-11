@@ -45,7 +45,10 @@ class Command(BaseCommand):
                     print(e)
                 else:
                     explains = '\n'.join(basic["explains"])
-                    print(explains)
+                    try:
+                        print(explains)
+                    except Exception as e:
+                        print(e)
                     entry, e_created = Entry.objects.get_or_create(
                         word=word,
                         book=book,
@@ -55,12 +58,18 @@ class Command(BaseCommand):
                     )
 
                     if e_created:
-                        print('Entry ' + entry.word.text + ' created, ' + str(i) + ' of ' + str(len(words)))
+                        try:
+                            print('Entry ' + entry.word.text + ' created, ' + str(i) + ' of ' + str(len(words)))
+                        except Exception as e:
+                            print(e)
                     else:
                         entry.defn = explains
                         entry.update_date = timezone.now()
                         entry.save()
-                        print('Entry ' + entry.word.text + ' updated, ' + str(i) + ' of ' + str(len(words)))
+                        try:
+                            print('Entry ' + entry.word.text + ' updated, ' + str(i) + ' of ' + str(len(words)))
+                        except Exception as e:
+                            print(e)
 
                     word.update_date = timezone.now()
                     word.save()
