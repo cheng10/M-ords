@@ -15,7 +15,7 @@ from forms import UserForm, LearnerForm, PasswordForm
 
 def index(request):
     latest_note_list = Note.objects.order_by('-pub_date')
-    paginator = Paginator(latest_note_list, 25)  # Show 25 words per page
+    paginator = Paginator(latest_note_list, 30)  # Show 30 words per page
 
     page = request.GET.get('page')
     try:
@@ -46,8 +46,8 @@ def index(request):
 
 
 def new(request):
-    latest_word_list = Word.objects.filter(update_date__lte=timezone.now()+timedelta(days=1))
-    paginator = Paginator(latest_word_list, 25)  # Show 25 words per page
+    latest_word_list = Word.objects.filter(update_date__gte=timezone.now()-timedelta(days=1))
+    paginator = Paginator(latest_word_list, 30)  # Show 30 words per page
 
     page = request.GET.get('page')
     try:
@@ -208,7 +208,7 @@ def book_detail(request, book_name):
     book = get_object_or_404(Book, name=book_name)
     entrys = book.entry_set.all()
     # notes = word.note_set.all().filter(pub_date__lte=timezone.now())
-    paginator = Paginator(entrys, 25)  # Show 25 entrys per page
+    paginator = Paginator(entrys, 30)  # Show 30 entrys per page
 
     page = request.GET.get('page')
     try:

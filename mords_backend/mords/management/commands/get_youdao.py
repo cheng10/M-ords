@@ -9,16 +9,19 @@ class Command(BaseCommand):
     help = 'crawl dictionary data from urban dictionary'
 
     def handle(self, *args, **options):
-        # raise CommandError('Poll "%s" does not exist' % poll_id)
         book, created = Book.objects.get_or_create(name='youdao',
                                                    defaults={'update_date': timezone.now()},
                                                    )
         words = Word.objects.filter(is_info_get=False)
+        query_times = 0
         for i, word in enumerate(words):
             text = word.text
             url = 'http://fanyi.youdao.com/openapi.do?keyfrom=ZedWord&key=1257551139&type=data&doctype=json&version=1.1&q='
             url += text
+            if query_times == 999:
+                raise CommandError('Exceeding the hourly query limit of 1000, aborting.')
             r = requests.get(url)
+            query_times += 1
             try:
                 r.json()["basic"]
             except Exception as e:
