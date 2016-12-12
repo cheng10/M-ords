@@ -76,6 +76,7 @@
 
     <hr/>
 
+    {% if user.is_authenticated %}
     <form action="{% url 'mords:comment' word.text %}" method="post">
     {% csrf_token %}
     <!--{% for note in notes %}-->
@@ -87,8 +88,13 @@
             </textarea>
             <input type="submit" value="Comment" class="btn btn-default"/>
         </div>
-
     </form>
+    {% else %}
+    <form action="{% url 'mords:login' %}">
+        {% csrf_token %}
+        <input type="submit" value="Login to Comment" class="btn btn-default"/>
+    </form>
+    {% endif %}
 
 {% endblock %}
 
