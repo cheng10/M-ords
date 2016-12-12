@@ -70,6 +70,35 @@
             </p>
             <hr/>
             {% endfor %}
+
+            {% if notes.paginator.num_pages > 1 %}
+            <ul class="pagination">
+                {% if notes.number > 1 %}
+                <li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+                    <a href="?page=1">1 <<</a>
+                </li>
+                {% endif %}
+                {% if notes.has_previous %}
+                <li class="paginate_button previous" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous">
+                    <a href="?page={{ notes.previous_page_number }}"><</a>
+                </li>
+                {% endif %}
+                <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0">
+                    <a href="#">{{notes.number}}</a>
+                </li>
+                {% if notes.has_next %}
+                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next">
+                    <a href="?page={{ notes.next_page_number }}"> ></a>
+                </li>
+                {% endif %}
+                {% if notes.number < notes.paginator.num_pages %}
+                <li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+                    <a href="?page={{ notes.paginator.num_pages }}">>> {{ notes.paginator.num_pages }}</a>
+                </li>
+                {% endif %}
+            </ul>
+            {% endif %}
+
         </div>
     </div>
 

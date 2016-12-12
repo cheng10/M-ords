@@ -197,6 +197,17 @@ def detail(request, word_text):
     word = get_object_or_404(Word, text=word_text)
     notes = word.note_set.all()
     # notes = word.note_set.all().filter(pub_date__lte=timezone.now())
+    paginator = Paginator(notes, 5)  # Show 5 notes per page
+
+    page = request.GET.get('page')
+    try:
+        notes = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        notes = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        notes = paginator.page(paginator.num_pages)
     context = {
         'word': word,
         'notes': notes
