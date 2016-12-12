@@ -276,6 +276,26 @@ def results(request, word_text):
     return render(request, 'mords/results.html', {'word': word})
 
 
+def search(request):
+    query = request.GET.get('q')
+    words = Word.objects.filter(text__icontains=query)
+    paginator = Paginator(words, 30)  # Show 30 words per page
+
+    page = request.GET.get('page')
+    try:
+        words = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        words = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        words = paginator.page(paginator.num_pages)
+    context = {
+        'words': words
+    }
+    return render(request, 'mords/search.html', context)
+
+
 def note(request, word_text):
     response = "You're looking at the note of word %s."
     return HttpResponse(response % word_text)

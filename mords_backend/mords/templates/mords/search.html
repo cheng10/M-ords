@@ -1,0 +1,55 @@
+{% extends 'mords/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Search Results
+{% endblock %}
+
+{% block body_block %}
+
+    <h1 class="page-header">Search Results</h1>
+
+    {% if words %}
+        <ul>
+            {% for word in words %}
+                <li><a href="{% url 'mords:detail' word.text %}">{{ word.text }}</a></li>
+                <!--<li>{{ entry.defn }}</li>-->
+                <!--<li>{{ entry.exmp }}</li>-->
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results available.</p>
+    {% endif %}
+
+
+    {% if words.paginator.num_pages > 1 %}
+    <hr/>
+    <ul class="pagination">
+        {% if words.number > 1 %}
+        <li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+            <a href="?page=1">1 <<</a>
+        </li>
+        {% endif %}
+        {% if words.has_previous %}
+        <li class="paginate_button previous" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous">
+            <a href="?page={{ words.previous_page_number }}"><</a>
+        </li>
+        {% endif %}
+        <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0">
+            <a href="#">{{words.number}}</a>
+        </li>
+        {% if words.has_next %}
+        <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next">
+            <a href="?page={{ words.next_page_number }}"> ></a>
+        </li>
+        {% endif %}
+        {% if words.number < words.paginator.num_pages %}
+        <li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+            <a href="?page={{ words.paginator.num_pages }}">>> {{ words.paginator.num_pages }}</a>
+        </li>
+        {% endif %}
+    </ul>
+    {% endif %}
+
+
+{% endblock %}
