@@ -9,7 +9,7 @@ from django.views import generic
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from mords_api.models import Note, Word, Learner, Entry, Book
+from mords_api.models import Note, Word, Learner, Entry, Book, LearningWord
 from forms import UserForm, LearnerForm, PasswordForm
 
 
@@ -215,6 +215,62 @@ def detail(request, word_text):
     return render(request, 'mords/detail.html', context)
 
 
+@login_required
+def learn(request):
+    learner = Learner.objects.get(user=request.user)
+    if LearningWord.objects.filter(learner=learner):
+        if len(LearningWord.objects.filter(learner=learner)) < Entry.objects.filter(book=learner.book):
+            entrys = Entry.objects.filter(book=learner.book)
+            i = 0
+            for entry in entrys:
+                l, created = LearningWord.objects.get_or_create(
+                    learner=learner,
+                    word=entry.word,
+                )
+                if created:
+                    i += 1
+                if i > 2:
+                    break
+        lword = LearningWord.objects.filter(learner=learner).order_by('-lv')[0]
+    elif learner.book:
+        entrys = Entry.objects.filter(book=learner.book)
+        i = 0
+        for entry in entrys:
+            l, created = LearningWord.objects.get_or_create(
+                learner=learner,
+                word=entry.word,
+            )
+            if created:
+                i += 1
+            if i > 2:
+                break
+        lword = LearningWord.objects.filter(learner=learner).order_by('-lv')[0]
+    else:
+        context = {
+            'error_message': "No words to learn. Have you chose a book to work on?",
+            'is_blank': True
+        }
+        return render(request, 'mords/learn.html', context)
+
+    notes = lword.word.note_set.all()
+
+    paginator = Paginator(notes, 5)  # Show 5 notes per page
+    page = request.GET.get('page')
+    try:
+        notes = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        notes = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        notes = paginator.page(paginator.num_pages)
+    context = {
+        'word': lword.word,
+        'notes': notes
+    }
+    return render(request, 'mords/learn.html', context)
+
+
 def book_detail(request, book_name):
     book = get_object_or_404(Book, name=book_name)
     entrys = book.entry_set.all()
@@ -296,7 +352,12 @@ def search(request):
     return render(request, 'mords/search.html', context)
 
 
-def note(request, word_text):
+def tick(request, word_text):
+    response = "You're looking at the note of word %s."
+    return HttpResponse(response % word_text)
+
+
+def cross(request, word_text):
     response = "You're looking at the note of word %s."
     return HttpResponse(response % word_text)
 

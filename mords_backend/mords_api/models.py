@@ -68,6 +68,17 @@ class Learner(models.Model):
 
 
 @python_2_unicode_compatible
+class LearningWord(models.Model):
+    learner = models.ForeignKey(Learner, on_delete=models.CASCADE)
+    word = models.ForeignKey(Word, on_delete=models.CASCADE)
+    lv = models.PositiveIntegerField(default=3)
+    update_datetime = models.DateTimeField(null=True)
+
+    def __str__(self):
+        return self.learner.user.username+', '+self.word.text+', '+str(self.lv)
+
+
+@python_2_unicode_compatible
 class Note(models.Model):
     word = models.ForeignKey(Word, on_delete=models.CASCADE)
     pub_date = models.DateTimeField(blank=False)

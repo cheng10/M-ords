@@ -1,0 +1,142 @@
+{% extends 'mords/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Learn
+{% endblock %}
+
+{% block body_block %}
+
+    <h1 class="page-header"> Learning </h1>
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <div class="jumbotron">
+        <h1>{{ word.text }}</h1>
+        <p class="fa fa-file-audio-o">
+            US: {{ word.us_pho }}
+            UK: {{word.uk_pho}}
+        </p>
+        <p>
+            <button type="button" class="btn btn-default">
+                <i class="fa fa-times"></i>
+            </button>
+            <button type="button" class="btn btn-primary">
+                <i class="fa fa-check"></i>
+            </button>
+        </p>
+    </div>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            Dictionary
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+                {% for entry in word.entry_set.all %}
+                {% if forloop.counter < 2 %}
+                <li class="active"><a href="#{{ entry.book }}" data-toggle="tab" aria-expanded="true">{{ entry.book }}</a>
+                </li>
+                {% else %}
+                <li><a href="#{{ entry.book }}" data-toggle="tab" aria-expanded="true">{{ entry.book }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                {% for entry in word.entry_set.all %}
+                {% if forloop.counter < 2 %}
+                <div class="tab-pane fade active in" id="{{ entry.book }}">
+                    <h4>Definition:</h4>
+                    <p>{{ entry.defn }}</p>
+                    <h4>Example: </h4>
+                    <p>{{ entry.exmp }}</p>
+                </div>
+                {% else %}
+                <div class="tab-pane fade" id="{{ entry.book }}">
+                    <h4>Definition:</h4>
+                    <p>{{ entry.defn }}</p>
+                    <h4>Example: </h4>
+                    <p>{{ entry.exmp }}</p>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <!-- /.panel-body -->
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Notes
+        </div>
+        <div class="panel-body">
+            {% for note in notes %}
+            <p>{{ note.text }}
+                <small>
+                    by {{note.author}} on {{note.pub_date}}
+                </small>
+            </p>
+            <hr/>
+            {% endfor %}
+
+            {% if notes.paginator.num_pages > 1 %}
+            <ul class="pagination">
+                {% if notes.number > 1 %}
+                <li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+                    <a href="?page=1">1 <<</a>
+                </li>
+                {% endif %}
+                {% if notes.has_previous %}
+                <li class="paginate_button previous" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous">
+                    <a href="?page={{ notes.previous_page_number }}"><</a>
+                </li>
+                {% endif %}
+                <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0">
+                    <a href="#">{{notes.number}}</a>
+                </li>
+                {% if notes.has_next %}
+                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next">
+                    <a href="?page={{ notes.next_page_number }}"> ></a>
+                </li>
+                {% endif %}
+                {% if notes.number < notes.paginator.num_pages %}
+                <li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+                    <a href="?page={{ notes.paginator.num_pages }}">>> {{ notes.paginator.num_pages }}</a>
+                </li>
+                {% endif %}
+            </ul>
+            {% endif %}
+
+        </div>
+    </div>
+
+
+    <hr/>
+
+    {% if user.is_authenticated %}
+    <form action="{% url 'mords:comment' word.text %}" method="post">
+    {% csrf_token %}
+    <!--{% for note in notes %}-->
+        <!--<label for="note{{ forloop.counter }}">{{ note.text }}</label><br />-->
+    <!--{% endfor %}-->
+        <div class="form-group">
+            <textarea type="text" name="note" id="note{{ forloop.counter }}" value="{{ note.text }}"
+            class="form-control">
+            </textarea>
+            <input type="submit" value="Comment" class="btn btn-default"/>
+        </div>
+    </form>
+    {% else %}
+    <form action="{% url 'mords:login' %}">
+        {% csrf_token %}
+        <input type="submit" value="Login to Comment" class="btn btn-default"/>
+    </form>
+    {% endif %}
+
+{% endblock %}
+
