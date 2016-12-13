@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+import random
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from mords_api.models import Note, Word, Learner, Entry, Book, LearningWord
 from forms import UserForm, LearnerForm, PasswordForm
@@ -215,12 +216,63 @@ def detail(request, word_id):
     return render(request, 'mords/detail.html', context)
 
 
+def learn_res(request, word_id):
+    word = get_object_or_404(Word, id=word_id)
+    notes = word.note_set.all()
+    # notes = word.note_set.all().filter(pub_date__lte=timezone.now())
+    paginator = Paginator(notes, 5)  # Show 5 notes per page
+
+    page = request.GET.get('page')
+    try:
+        notes = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        notes = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        notes = paginator.page(paginator.num_pages)
+    context = {
+        'word': word,
+        'notes': notes
+    }
+    return render(request, 'mords/learn_res.html', context)
+
+
+def cross_res(request, word_id):
+    word = get_object_or_404(Word, id=word_id)
+    notes = word.note_set.all()
+    # notes = word.note_set.all().filter(pub_date__lte=timezone.now())
+    paginator = Paginator(notes, 5)  # Show 5 notes per page
+
+    page = request.GET.get('page')
+    try:
+        notes = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        notes = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        notes = paginator.page(paginator.num_pages)
+    context = {
+        'word': word,
+        'notes': notes
+    }
+    return render(request, 'mords/cross_res.html', context)
+
+
 @login_required
 def learn(request):
     learner = Learner.objects.get(user=request.user)
-    if LearningWord.objects.filter(learner=learner):
+    if learner.words_finished >= learner.words_perDay:
+        context = {
+            'error_message': "You have finished today's learning task. Congrats!",
+            'is_blank': True
+        }
+        return render(request, 'mords/learn.html', context)
+
+    elif LearningWord.objects.filter(learner=learner):
         if len(LearningWord.objects.filter(learner=learner)) < Entry.objects.filter(book=learner.book):
-            entrys = Entry.objects.filter(book=learner.book)
+            entrys = Entry.objects.filter(book=learner.book).order_by('?')
             i = 0
             for entry in entrys:
                 l, created = LearningWord.objects.get_or_create(
@@ -231,9 +283,14 @@ def learn(request):
                     i += 1
                 if i > 2:
                     break
-        lword = LearningWord.objects.filter(learner=learner).order_by('-lv')[0]
+        if LearningWord.objects.filter(learner=learner).order_by('lv')[0].lv == 0:
+            context = {
+                'error_message': "You have finished the current book. Choose a new one.",
+                'is_blank': True
+            }
+            return render(request, 'mords/learn.html', context)
     elif learner.book:
-        entrys = Entry.objects.filter(book=learner.book)
+        entrys = Entry.objects.filter(book=learner.book).order_by('?')
         i = 0
         for entry in entrys:
             l, created = LearningWord.objects.get_or_create(
@@ -244,13 +301,19 @@ def learn(request):
                 i += 1
             if i > 2:
                 break
-        lword = LearningWord.objects.filter(learner=learner).order_by('-lv')[0]
     else:
         context = {
             'error_message': "No words to learn. Have you chose a book to work on?",
             'is_blank': True
         }
         return render(request, 'mords/learn.html', context)
+
+    if random.random() > 0.7:
+        lword = LearningWord.objects.filter(learner=learner).filter(lv__in=[1, 2, 3]).order_by('?')[0]
+        print('new word')
+    else:
+        lword = LearningWord.objects.filter(learner=learner).filter(lv__in=[1, 2, 3]).order_by('-lv')[0]
+        print('old word')
 
     notes = lword.word.note_set.all()
 
@@ -352,18 +415,58 @@ def search(request):
     return render(request, 'mords/search.html', context)
 
 
+@login_required
 def tick(request, word_id):
-    response = "You're looking at the note of word %s."
-    return HttpResponse(response % word_id)
+    word = get_object_or_404(Word, id=word_id)
+    if request.method == 'POST':
+        learner = Learner.objects.get(user=request.user)
+        lword = LearningWord.objects.get(learner=learner, word=word)
+        if lword.lv > 0:
+            learner.words_finished += 1
+            learner.save()
+            lword.lv -= 1
+            lword.update_datetime = timezone.datetime.now()
+            lword.save()
+    else:
+        return HttpResponse("Does not support get method.")
+
+    return HttpResponseRedirect(reverse('mords:learn_res', args=(word.id,)))
 
 
+@login_required
 def cross(request, word_id):
-    response = "You're looking at the note of word %s."
-    return HttpResponse(response % word_id)
+    word = get_object_or_404(Word, id=word_id)
+    if request.method == 'POST':
+        learner = Learner.objects.get(user=request.user)
+        if learner.words_finished >= 1:
+            learner.words_finished -= 1
+            learner.save()
+        lword = LearningWord.objects.get(learner=learner, word=word)
+        lword.lv = 3
+        lword.update_datetime = timezone.datetime.now()
+        lword.save()
+    else:
+        return HttpResponse("Does not support get method.")
+
+    return HttpResponseRedirect(reverse('mords:cross_res', args=(word.id,)))
 
 
-def know(request, word_id):
-    return HttpResponse("You're saying you know word %s." % word_id)
+@login_required
+def cross2(request, word_id):
+    word = get_object_or_404(Word, id=word_id)
+    if request.method == 'POST':
+        learner = Learner.objects.get(user=request.user)
+        if learner.words_finished >= 1:
+            learner.words_finished -= 1
+            learner.save()
+        lword = LearningWord.objects.get(learner=learner, word=word)
+        lword.lv = 3
+        lword.update_datetime = timezone.datetime.now()
+        lword.save()
+    else:
+        return HttpResponse("Does not support get method.")
+
+    return HttpResponseRedirect(reverse('mords:learn'))
 
 
 def latest_notes(request):

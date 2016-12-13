@@ -24,13 +24,20 @@
             UK: {{word.uk_pho}}
         </p>
         <p>
-            <button type="button" class="btn btn-default">
-                <i class="fa fa-times"></i>
-            </button>
-            <button type="button" class="btn btn-primary">
-                <i class="fa fa-check"></i>
-            </button>
+            <form action="{% url 'mords:cross' word.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-default">
+                    <i class="fa fa-times"></i>
+                </button>
+            </form>
+            <form action="{% url 'mords:tick' word.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-check"></i>
+                </button>
+            </form>
         </p>
+
     </div>
     {% endif %}
 

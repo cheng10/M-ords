@@ -77,6 +77,9 @@ class LearningWord(models.Model):
     def __str__(self):
         return self.learner.user.username+', '+self.word.text+', '+str(self.lv)
 
+    class Meta:
+        ordering = ['learner', '-lv']
+
 
 @python_2_unicode_compatible
 class Note(models.Model):

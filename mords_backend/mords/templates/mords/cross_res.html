@@ -18,12 +18,6 @@
             UK: {{word.uk_pho}}
         </p>
         <p>
-            <form action="{% url 'mords:cross2' word.id %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-default">
-                    <i class="fa fa-times"></i>
-                </button>
-            </form>
             <form action="{% url 'mords:learn'%}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-primary">

@@ -50,10 +50,9 @@ source ~/.bashrc
 source ~/.profile
 export PATH="/home/ubuntu/bin:/home/ubuntu/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 
-cd /home/ubuntu/M-ords/mords_backend/scripts || error_exit "$LINENO: could not cd to the dir, aborting"
-mv  crawler.log crawler.log.bak || error_exit "$LINENO: could not backup log, aborting"
-mv  youdao.log youdao.log.bak || error_exit "$LINENO: could not backup log, aborting"
-mv  reset_task.log reset_task.log.bak || error_exit "$LINENO: could not backup log, aborting"
+source /home/ubuntu/M-ords/mords_backend/venv/bin/activate || error_exit "$LINENO: could not source venv, aborting"
+cd /home/ubuntu/M-ords/mords_backend || error_exit "$LINENO: could not cd to the dir, aborting"
+./manage.py reset_task || error_exit "$LINENO: could not run, aborting"
 
 info_print '	finished'
 rm $PIDFILE
