@@ -106,7 +106,7 @@
     <hr/>
 
     {% if user.is_authenticated %}
-    <form action="{% url 'mords:comment' word.text %}" method="post">
+    <form action="{% url 'mords:comment' word.id %}" method="post">
     {% csrf_token %}
     <!--{% for note in notes %}-->
         <!--<label for="note{{ forloop.counter }}">{{ note.text }}</label><br />-->

@@ -187,14 +187,14 @@ def update_password(request):
                   )
 
 
-def detail(request, word_text):
+def detail(request, word_id):
     """
     Excludes any notes that aren't published yet.
     :param request:
-    :param word_text:
+    :param word_id:
     :return:
     """
-    word = get_object_or_404(Word, text=word_text)
+    word = get_object_or_404(Word, id=word_id)
     notes = word.note_set.all()
     # notes = word.note_set.all().filter(pub_date__lte=timezone.now())
     paginator = Paginator(notes, 5)  # Show 5 notes per page
@@ -296,8 +296,8 @@ def book_detail(request, book_name):
 
 
 @login_required
-def comment(request, word_text):
-    word = get_object_or_404(Word, text=word_text)
+def comment(request, word_id):
+    word = get_object_or_404(Word, id=word_id)
 
     try:
         text = request.POST['note']
@@ -324,11 +324,11 @@ def comment(request, word_text):
             author=author,
             text=text
         )
-        return HttpResponseRedirect(reverse('mords:results', args=(word.text,)))
+        return HttpResponseRedirect(reverse('mords:results', args=(word.id,)))
 
 
-def results(request, word_text):
-    word = get_object_or_404(Word, text=word_text)
+def results(request, word_id):
+    word = get_object_or_404(Word, id=word_id)
     return render(request, 'mords/results.html', {'word': word})
 
 
@@ -352,18 +352,18 @@ def search(request):
     return render(request, 'mords/search.html', context)
 
 
-def tick(request, word_text):
+def tick(request, word_id):
     response = "You're looking at the note of word %s."
-    return HttpResponse(response % word_text)
+    return HttpResponse(response % word_id)
 
 
-def cross(request, word_text):
+def cross(request, word_id):
     response = "You're looking at the note of word %s."
-    return HttpResponse(response % word_text)
+    return HttpResponse(response % word_id)
 
 
-def know(request, word_text):
-    return HttpResponse("You're saying you know word %s." % word_text)
+def know(request, word_id):
+    return HttpResponse("You're saying you know word %s." % word_id)
 
 
 def latest_notes(request):

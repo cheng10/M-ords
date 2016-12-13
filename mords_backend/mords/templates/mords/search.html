@@ -12,7 +12,7 @@
     {% if words %}
         <ul>
             {% for word in words %}
-                <li><a href="{% url 'mords:detail' word.text %}">{{ word.text }}</a></li>
+                <li><a href="{% url 'mords:detail' word.id %}">{{ word.text }}</a></li>
                 <!--<li>{{ entry.defn }}</li>-->
                 <!--<li>{{ entry.exmp }}</li>-->
             {% endfor %}

@@ -16,7 +16,7 @@
         <ul>
             {% for entry in entrys %}
             <!--<li><a href="/mords/{{ note.word.text }}/note/">{{ note.text }}</a></li>-->
-                <li><a href="{% url 'mords:detail' entry.word.text %}">{{ entry.word.text }}</a></li>
+                <li><a href="{% url 'mords:detail' entry.word.id %}">{{ entry.word.text }}</a></li>
             {% endfor %}
         </ul>
     {% else %}
