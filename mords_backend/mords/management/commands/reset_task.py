@@ -3,7 +3,7 @@ from mords_api.models import Learner
 
 
 class Command(BaseCommand):
-    help = 'crawl dictionary data from urban dictionary'
+    help = 'reset learner learning status everyday'
 
     def handle(self, *args, **options):
         learners = Learner.objects.all()
