@@ -15,19 +15,21 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Mords</title>
+    <title>Mords 慕词</title>
 
     <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'mords/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
+    <link href="{% static 'mords/dist/css/carousel.css' %}" rel="stylesheet">
     <!-- MetisMenu CSS -->
     <link href="{% static 'mords/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="{% static 'mords/dist/css/sb-admin-2.css' %}" rel="stylesheet">
 
+    <link href="{% static 'mords/less/reset.css' %}" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="{% static 'mords/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
     
@@ -73,20 +75,20 @@
 
                             {% if user.is_authenticated %}
                             <li >hi, {{ user.username }}!</li>
-                            <li><a href="{% url 'mords:profile' %}"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                            <li><a href="{% url 'mords:profile' %}"><i class="fa fa-user fa-fw"></i> 用户</a>
                             </li>
-                            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                            <li><a href="#"><i class="fa fa-gear fa-fw"></i> 设置</a>
                             </li>
                             {% else %}
-                            <li><a href="{% url 'mords:login' %}"><i class="fa fa-user fa-fw"></i> Login</a>
+                            <li><a href="{% url 'mords:login' %}"><i class="fa fa-user fa-fw"></i> 登录</a>
                             </li>
-                            <li><a href="{% url 'mords:signup' %}"><i class="fa fa-user fa-fw"></i> Sign Up</a>
+                            <li><a href="{% url 'mords:signup' %}"><i class="fa fa-user fa-fw"></i> 注册</a>
                             </li>
                             {% endif %}
 
                             {% if user.is_authenticated %}
                             <li class="divider"></li>
-                            <li><a href="{% url 'mords:logout' %}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            <li><a href="{% url 'mords:logout' %}"><i class="fa fa-sign-out fa-fw"></i> 登出</a>
                             </li>
                             {% endif %}
                         </ul>
@@ -108,7 +110,7 @@
                                   method="get">
                                 <div class="form-group" style="margin-top: 10px;padding-bottom: 0px;">
                                     <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search" name="q">
+                                    <input type="text" class="form-control" placeholder="查词" name="q">
                                     <span class="input-group-btn">
                                         <button class="btn btn-default" type="submit" style="padding: 5px;">
                                             <i class="material-icons">search</i>
@@ -122,23 +124,23 @@
 
 
                         <li>
-                            <a href="{% url 'mords:index' %}"><i class="fa fa-home fa-fw"></i>Home</a>
+                            <a href="{% url 'mords:index' %}"><i class="fa fa-home fa-fw"></i> 主页</a>
                         </li>
                         <li>
-                            <a href="{% url 'mords:new' %}"><i class="fa fa-clock-o fa-fw"></i>New Words</a>
+                            <a href="{% url 'mords:new' %}"><i class="fa fa-clock-o fa-fw"></i> 今日新词</a>
                         </li>
                         <li>
-                            <a href="{% url 'mords:learn' %}"><i class="fa fa-rocket fa-fw"></i>Learn</a>
+                            <a href="{% url 'mords:learn' %}"><i class="fa fa-rocket fa-fw"></i> 开始学</a>
                         </li>
 
                         <li class="active">
-                            <a href="#"><i class="fa fa-book fa-fw"></i> Vocabulary Books<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-book fa-fw"></i> 单词书<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse in" aria-expanded="true">
                                 <li>
-                                    <a href="{% url 'mords:book_detail' 'youdao' %}">youdao</a>
+                                    <a href="{% url 'mords:book_detail' 'youdao' %}">有道</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'mords:book_detail' 'urban_dic_new' %}">urban_dic_new</a>
+                                    <a href="{% url 'mords:book_detail' 'urban_dic_new' %}">Urban Dictionary</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

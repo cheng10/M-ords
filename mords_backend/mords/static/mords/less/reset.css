@@ -1,0 +1,37 @@
+.no-underline:hover {
+	text-decoration: none;
+}
+
+.content-align-center {
+	text-align: center
+}
+.content-align-right {
+	text-align: right;
+}
+
+.material-form{
+	
+}
+
+.body-bg{
+	background-image: url(../images/3.jpg);
+	background-size:     cover;                      /* <------ */
+    background-repeat:   no-repeat;
+    background-position: center center; 
+}
+
+::-webkit-input-placeholder {
+   text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   text-align: center;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   text-align: center;  
+}
+
+:-ms-input-placeholder {  
+   text-align: center; 
+}

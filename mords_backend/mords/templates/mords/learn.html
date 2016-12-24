@@ -17,23 +17,19 @@
     {% endif %}
 
     {% if not is_blank %}
-    <div class="jumbotron">
+    <div class="jumbotron" style="max-width: 360px;">
         <h1>{{ word.text }}</h1>
-        <p class="fa fa-file-audio-o">
-            US: {{ word.us_pho }}
-            UK: {{word.uk_pho}}
-        </p>
         <p>
             <form action="{% url 'mords:cross' word.id %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-default">
-                    <i class="fa fa-times"></i>
+                    <i class="fa fa-times"></i> 不认识
                 </button>
             </form>
             <form action="{% url 'mords:tick' word.id %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-primary">
-                    <i class="fa fa-check"></i>
+                    <i class="fa fa-check"></i> 认识
                 </button>
             </form>
         </p>

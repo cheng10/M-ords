@@ -13,7 +13,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from mords_api.models import Note, Word, Learner, Entry, Book, LearningWord
 from forms import UserForm, LearnerForm, PasswordForm
 
-
+@login_required
 def index(request):
     latest_note_list = Note.objects.order_by('-pub_date')
     paginator = Paginator(latest_note_list, 30)  # Show 30 words per page
