@@ -67,10 +67,13 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="{% static 'mords/vendor/metisMenu/metisMenu.min.js' %}"></script>
 
-    <!-- Custom Theme JavaScript -->
-    <script src="{% static 'mords/dist/js/sb-admin-2.js' %}"></script>
+    <!-- Custom Theme JavaScript --> 
+    <script src="{% static 'mords/vendor/bootstrap-material-design/dist/js/material.min.js' %}"></script>
+    <script src="{% static 'mords/vendor/bootstrap-material-design/dist/js/ripples.min.js' %}"></script>
 
-
+    <script type="text/javascript">
+        $.material.init();
+    </script>
 
 </body>
 

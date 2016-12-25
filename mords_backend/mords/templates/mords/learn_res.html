@@ -120,6 +120,11 @@
             </ul>
             {% endif %}
 
+            <div class="form-group label-floating">
+              <label class="control-label" for="focusedInput1">Write something to make the label float</label>
+              <input class="form-control" id="focusedInput1" type="text">
+            </div>
+
         </div>
     </div>
 
@@ -132,10 +137,9 @@
     <!--{% for note in notes %}-->
         <!--<label for="note{{ forloop.counter }}">{{ note.text }}</label><br />-->
     <!--{% endfor %}-->
-        <div class="form-group">
-            <textarea type="text" name="note" id="note{{ forloop.counter }}" value="{{ note.text }}"
-            class="form-control">
-            </textarea>
+        <div class="form-group label-floating">
+            <label class="control-label" for="note{{ forloop.counter }}">Write something to make the label float</label>
+            <input class="form-control" name="note" id="note{{ forloop.counter }}" value="{{ note.text }}" type="text">
             <input type="submit" value="Comment" class="btn btn-default"/>
         </div>
     </form>
