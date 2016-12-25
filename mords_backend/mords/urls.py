@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^new/$', views.new, name='new'),
     url(r'^learn/$', views.learn, name='learn'),
+    url(r'^review/$', views.review, name='review'),
     url(r'^learn_res/(?P<word_id>[0-9]+)/$', views.learn_res, name='learn_res'),
     url(r'^cross_res/(?P<word_id>[0-9]+)/$', views.cross_res, name='cross_res'),
     url(r'^search/$', views.search, name='search'),

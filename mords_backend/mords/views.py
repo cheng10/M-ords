@@ -309,10 +309,10 @@ def learn(request):
         return render(request, 'mords/learn.html', context)
 
     if random.random() > 0.7:
-        lword = LearningWord.objects.filter(learner=learner).filter(lv__in=[1, 2, 3]).order_by('?')[0]
+        lword = LearningWord.objects.filter(learner=learner).filter(lv__in=[2, 3]).order_by('?')[0]
         print('new word')
     else:
-        lword = LearningWord.objects.filter(learner=learner).filter(lv__in=[1, 2, 3]).order_by('-lv')[0]
+        lword = LearningWord.objects.filter(learner=learner).filter(lv__in=[2, 3]).order_by('-lv')[0]
         print('old word')
 
     notes = lword.word.note_set.all()
@@ -332,6 +332,28 @@ def learn(request):
         'notes': notes
     }
     return render(request, 'mords/learn.html', context)
+
+
+def review(request):
+    learner = Learner.objects.get(user=request.user)
+    lwords = LearningWord.objects.filter(learner=learner).filter(lv__in=[1, 2]).order_by('-update_datetime')
+
+    paginator = Paginator(lwords, 30)  # Show 30 entrys per page
+
+    page = request.GET.get('page')
+    try:
+        lwords = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        lwords = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        lwords = paginator.page(paginator.num_pages)
+
+    context = {
+        'lwords': lwords,
+    }
+    return render(request, 'mords/review.html', context)
 
 
 def book_detail(request, book_name):
