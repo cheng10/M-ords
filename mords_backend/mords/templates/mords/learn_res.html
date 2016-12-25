@@ -119,36 +119,32 @@
                 {% endif %}
             </ul>
             {% endif %}
-
-            <div class="form-group label-floating">
-              <label class="control-label" for="focusedInput1">Write something to make the label float</label>
-              <input class="form-control" id="focusedInput1" type="text">
-            </div>
-
+        </div>
+        <div>
+            {% if user.is_authenticated %}
+            <form action="{% url 'mords:comment' word.id %}" method="post">
+            {% csrf_token %}
+            <!--{% for note in notes %}-->
+                <!--<label for="note{{ forloop.counter }}">{{ note.text }}</label><br />-->
+            <!--{% endfor %}-->
+                <div class="form-group label-floating">
+                    <label class="control-label" for="note{{ forloop.counter }}">Comment here: </label>
+                    <input class="form-control" name="note" id="note{{ forloop.counter }}" value="{{ note.text }}" type="text">
+                    <input type="submit" value="Comment" class="btn btn-default"/>
+                </div>
+            </form>
+            {% else %}
+            <form action="{% url 'mords:login' %}">
+                {% csrf_token %}
+                <input type="submit" value="Login to Comment" class="btn btn-default"/>
+            </form>
+            {% endif %}
         </div>
     </div>
 
 
     <hr/>
 
-    {% if user.is_authenticated %}
-    <form action="{% url 'mords:comment' word.id %}" method="post">
-    {% csrf_token %}
-    <!--{% for note in notes %}-->
-        <!--<label for="note{{ forloop.counter }}">{{ note.text }}</label><br />-->
-    <!--{% endfor %}-->
-        <div class="form-group label-floating">
-            <label class="control-label" for="note{{ forloop.counter }}">Write something to make the label float</label>
-            <input class="form-control" name="note" id="note{{ forloop.counter }}" value="{{ note.text }}" type="text">
-            <input type="submit" value="Comment" class="btn btn-default"/>
-        </div>
-    </form>
-    {% else %}
-    <form action="{% url 'mords:login' %}">
-        {% csrf_token %}
-        <input type="submit" value="Login to Comment" class="btn btn-default"/>
-    </form>
-    {% endif %}
 
 {% endblock %}
 

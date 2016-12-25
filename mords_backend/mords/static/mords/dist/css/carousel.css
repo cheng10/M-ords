@@ -41,6 +41,7 @@ body {
 .carousel {
   height: 500px;
   margin-bottom: 60px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
@@ -53,6 +54,7 @@ body {
   background-color: #777;
 }
 .carousel-inner > .item > img {
+  background-color: #00796B;
   position: absolute;
   top: 0;
   left: 0;
