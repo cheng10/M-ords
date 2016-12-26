@@ -27,9 +27,9 @@
             <div class="carousel-caption">
               <h1>勤·学习</h1><br>
               <p>
-              您的每日任务是<strong style="color: #FFEB3B">30</strong>个单词<br>
-              已经完成了<strong style="color: #FFEB3B">10</strong>个<br>
-              还剩<strong style="color: #FFEB3B">20</strong>个
+              您的每日任务是<strong style="color: #FFEB3B">{{learner.words_perDay}}</strong>个单词<br>
+              已经完成了<strong style="color: #FFEB3B">{{learner.words_finished}}</strong>个<br>
+              还剩<strong style="color: #FFEB3B">{{to_learn}}</strong>个
               </p>
               <p><a class="btn btn-lg btn-primary" href="{% url 'mords:learn' %}" role="button" style="color: #B2DFDB">去学习</a></p>
             </div>
@@ -42,7 +42,7 @@
               <h1>多·回顾</h1><br>
               <p>
               累计到今天<br>
-              您已经成功背诵了<strong style="color: #FFEB3B">10</strong>个单词<br>
+              您已经成功背诵了<strong style="color: #FFEB3B">{{word_num}}</strong>个单词<br>
               子曰”温故而知新“哦<br>
               </p>
               <p><a class="btn btn-lg btn-primary" href="#" role="button" style="color: #B2DFDB">去复习</a></p>

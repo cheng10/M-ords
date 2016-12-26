@@ -13,22 +13,19 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from mords_api.models import Note, Word, Learner, Entry, Book, LearningWord
 from forms import UserForm, LearnerForm, PasswordForm
 
+
 @login_required
 def index(request):
-    latest_note_list = Note.objects.order_by('-pub_date')
-    paginator = Paginator(latest_note_list, 30)  # Show 30 words per page
+    learner = Learner.objects.get(user=request.user)
+    to_learn = learner.words_perDay - learner.words_finished
+    word_num = len(LearningWord.objects.filter(learner=learner).filter(lv__in=[1, 2]))
+    context = {
+        "learner": learner,
+        "to_learn": to_learn,
+        "word_num": word_num
+    }
 
-    page = request.GET.get('page')
-    try:
-        notes = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        notes = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        notes = paginator.page(paginator.num_pages)
-
-    return render(request, 'mords/index.html', {'latest_note_list': notes})
+    return render(request, 'mords/index.html', context)
 
 
 # class IndexView(generic.ListView):
