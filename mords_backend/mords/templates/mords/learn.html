@@ -17,7 +17,7 @@
     {% endif %}
 
     {% if not is_blank %}
-    <div class="jumbotron" style="max-width: 360px;">
+    <div class="jumbotron">
         <h1>{{ word.text }}</h1>
         <p>
             <form action="{% url 'mords:cross' word.id %}" method="post">

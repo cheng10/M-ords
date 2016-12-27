@@ -8,10 +8,6 @@
 {% block body_block %}
 
     <h1 class="page-header">{{ word.text }}</h1>
-    <p class="fa fa-file-audio-o">
-        US: {{ word.us_pho }}
-        UK: {{word.uk_pho}}
-    </p>
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
     <div class="panel panel-primary">

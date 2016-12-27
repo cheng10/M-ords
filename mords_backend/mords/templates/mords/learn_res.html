@@ -8,11 +8,10 @@
 {% block body_block %}
 
     <h1 class="page-header"> Learning </h1>
-    <div class="pull-right" style="display: inline"><wb:share-button appkey="1530952887" addition="simple" type="button" ralateUid="2232841707" default_text="mords.cc ， 你值得拥有！" pic="http%3A%2F%2Fwww.mords.cc%2Fmedia%2Fprofile_images%2Fmords_logo.png"></wb:share-button></div>
 
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-    <div class="jumbotron" style="max-width: 360px; background-color: #f5f5f5">
+    <div class="jumbotron word-card">
         <h1>{{ word.text }}</h1>
         <p class="fa fa-file-audio-o">
             US: {{ word.us_pho }}
@@ -118,28 +117,29 @@
                 </li>
                 {% endif %}
             </ul>
-            {% endif %}
-        </div>
-        <div>
-            {% if user.is_authenticated %}
-            <form action="{% url 'mords:comment' word.id %}" method="post">
-            {% csrf_token %}
-            <!--{% for note in notes %}-->
-                <!--<label for="note{{ forloop.counter }}">{{ note.text }}</label><br />-->
-            <!--{% endfor %}-->
-                <div class="form-group label-floating">
-                    <label class="control-label" for="note{{ forloop.counter }}">Comment here: </label>
-                    <input class="form-control" name="note" id="note{{ forloop.counter }}" value="{{ note.text }}" type="text">
-                    <input type="submit" value="Comment" class="btn btn-default"/>
-                </div>
-            </form>
-            {% else %}
-            <form action="{% url 'mords:login' %}">
+                {% endif %}
+            <div>
+                {% if user.is_authenticated %}
+                <form action="{% url 'mords:comment' word.id %}" method="post">
                 {% csrf_token %}
-                <input type="submit" value="Login to Comment" class="btn btn-default"/>
-            </form>
-            {% endif %}
-        </div>
+                <!--{% for note in notes %}-->
+                    <!--<label for="note{{ forloop.counter }}">{{ note.text }}</label><br />-->
+                <!--{% endfor %}-->
+                    <div class="form-group label-floating">
+                        <label class="control-label" for="note{{ forloop.counter }}">Add your notes </label>
+                        <input class="form-control" name="note" id="note{{ forloop.counter }}" value="{{ note.text }}" type="text">
+                        <input type="submit" value="Comment" class="btn btn-default btn-success pull-right"/>
+                    </div>
+                </form>
+                {% else %}
+                <form action="{% url 'mords:login' %}">
+                    {% csrf_token %}
+                    <input type="submit" value="Login to Comment" class="btn btn-primary"/>
+                </form>
+                {% endif %}
+            </div>
+
+        </div>    
     </div>
 
 
