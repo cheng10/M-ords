@@ -59,17 +59,18 @@
         </div>
         <div class="panel-body">
             {% for note in word.note_set.all %}
-            <p>{{ note.text }}
-                <small>
+            <div>
+                <p class="text-primary" style="display: inline-block;">{{ note.text }}</p>
+                <small style="color: #757575">
                     by {{note.author}} on {{note.pub_date}}
                 </small>
-            </p>
-            <hr/>
+                <hr style="margin-top:0px;">
+            </div>
             {% endfor %}
         </div>
     </div>
 
-    <btn class="btn btn-default"><a href="{% url 'mords:detail' word.id %}">Comment again?</a></btn>
+    <btn class="btn btn-primary"><a href="{% url 'mords:detail' word.id %}" style="margin-top:0px;">Go Back</a></btn>
 
 {% endblock %}
 

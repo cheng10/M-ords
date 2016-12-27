@@ -7,8 +7,26 @@
 
 {% block body_block %}
 
-    <h1 class="page-header">Review</h1>
+    <h1 class="page-header">Review 复习</h1>
 
+    <wb:share-button appkey="1530952887" addition="simple" type="button" ralateUid="2232841707" default_text="mords.cc ， 你值得拥有！" pic="http%3A%2F%2Fwww.mords.cc%2Fmedia%2Fprofile_images%2Fmords_logo.png" class="pull-right"></wb:share-button>
+
+    {% if lwords.paginator.num_pages > 1 %}
+    <ul class="pager">
+        {% if lwords.has_previous %}
+            <li class="previous">
+                <a href="?page={{ lwords.previous_page_number }}">← Newer</a>
+            </li>
+        {% else %}
+            <li class="previous disabled"><a href="#">← Newer</a></li>
+        {% endif %}
+        {% if lwords.has_next %}
+            <li class="next"><a class="withripple" href="?page={{ lwords.next_page_number }}">Older →</a></li>
+        {% else %}
+            <li class="next"><a class="withripple" href="#">Older →</a></li>
+        {% endif %}
+    </ul>
+    {% endif %}
 
     {% if lwords %}
         <ul>
@@ -20,9 +38,9 @@
     {% else %}
         <p>No words are available.</p>
     {% endif %}
+    <hr>
 
-    <wb:share-button appkey="1530952887" addition="simple" type="button" ralateUid="2232841707" default_text="mords.cc ， 你值得拥有！" pic="http%3A%2F%2Fwww.mords.cc%2Fmedia%2Fprofile_images%2Fmords_logo.png"></wb:share-button>
-
+    <!--
     {% if lwords.paginator.num_pages > 1 %}
     <hr/>
     <ul class="pagination">
@@ -51,5 +69,6 @@
         {% endif %}
     </ul>
     {% endif %}
+    -->
 
 {% endblock %}
