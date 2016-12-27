@@ -10,18 +10,20 @@
 <div class="panel panel-primary" style="margin-top: 20px;">
     <div class="panel-heading">Profile</div>
     <div class="panel-body">
-        <p>
-            <label>Book:</label>
-            {{ learner.book }}
-        </p>
-        <p>
-            <label>Words perDay:</label>
-            {{ learner.words_perDay }}
-        </p>
-        <p>
-            <label>Profile Picture:</label>
-            <img src="../media/{{learner.pic }}"/>
-        </p>
+
+        <div class="list-group">
+          <div class="list-group-item">
+            <div class="row-picture">
+              <img class="circle" src="../media/{{learner.pic }}" alt="" style="height:72px; width: 72px;">
+            </div>
+            <div class="row-content">
+              <h4 class="list-group-item-heading" style="color:#009688; font-size: 150%">{{ learner.user }}</h4>
+
+              <p class="list-group-item-text"><label>单词书：</label>{{learner.book}}</p>
+              <p class="list-group-item-text"><label>学习量：</label>{{learner.words_perDay}}</p>
+            </div>
+          </div>
+        </div>
     </div>
 </div>
 
