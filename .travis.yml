@@ -1,0 +1,9 @@
+language: python
+python:
+  - "2.7"
+# command to install dependencies
+install:
+  - "sudo apt-get install libpq-dev python-dev python-psycopg2"
+  - "pip install -r mords_backend/requirements.txt"
+# command to run tests
+script: cd mords_backend; ./manage.py test
