@@ -13,50 +13,56 @@
     <h1 class="page-header">Welcome</h1>
     {% endif %}
 
-    {% if latest_note_list %}
-        <ul>
-            {% for note in latest_note_list %}
-            <!--<li><a href="/mords/{{ note.word.text }}/note/">{{ note.text }}</a></li>-->
-                <li><a href="{% url 'mords:detail' note.word.id %}">
-                    {{ note.text }}
-                    <small>by {{note.author}}</small>
-                </a></li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No notes are available.</p>
-    {% endif %}
-
-        <wb:share-button appkey="1530952887" addition="simple" type="button" ralateUid="2232841707" default_text="mords.cc ， 你值得拥有！" pic="http%3A%2F%2Fwww.mords.cc%2Fmedia%2Fprofile_images%2Fmords_logo.png"></wb:share-button>
-
-
-    {% if latest_note_list.paginator.num_pages > 1 %}
-    <hr/>
-    <ul class="pagination">
-        {% if latest_note_list.number > 1 %}
-        <li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
-            <a href="?page=1">1 <<</a>
-        </li>
-        {% endif %}
-        {% if latest_note_list.has_previous %}
-        <li class="paginate_button previous" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous">
-            <a href="?page={{ latest_note_list.previous_page_number }}"><</a>
-        </li>
-        {% endif %}
-        <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0">
-            <a href="#">{{latest_note_list.number}}</a>
-        </li>
-        {% if latest_note_list.has_next %}
-        <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next">
-            <a href="?page={{ latest_note_list.next_page_number }}"> ></a>
-        </li>
-        {% endif %}
-        {% if latest_note_list.number < latest_note_list.paginator.num_pages %}
-        <li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
-            <a href="?page={{ latest_note_list.paginator.num_pages }}">>> {{ latest_note_list.paginator.num_pages }}</a>
-        </li>
-        {% endif %}
-    </ul>
-    {% endif %}
-
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <img class="first-slide" src="" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>勤·学习</h1><br>
+              <p>
+              您的每日任务是<strong style="color: #FFEB3B">{{learner.words_perDay}}</strong>个单词<br>
+              已经完成了<strong style="color: #FFEB3B">{{learner.words_finished}}</strong>个<br>
+              还剩<strong style="color: #FFEB3B">{{to_learn}}</strong>个
+              </p>
+              <p><a class="btn btn-lg btn-primary" href="{% url 'mords:learn' %}" role="button" style="color: #B2DFDB">去学习</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="second-slide" src="" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>多·回顾</h1><br>
+              <p>
+              累计到今天<br>
+              您已经成功背诵了<strong style="color: #FFEB3B">{{word_num}}</strong>个单词<br>
+              子曰”温故而知新“哦<br>
+              </p>
+              <p><a class="btn btn-lg btn-primary" href="{% url 'mords:review' %}" role="button" style="color: #B2DFDB">去复习</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="third-slide" src="" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>续·一秒</h1><br>
+              <p>
+              如果您<strong style="color: #FFEB3B">支持</strong>我们的话<br>
+              等于说<strong style="color: #FFEB3B">你也有责任</strong><br>
+              帮我们续上这一秒吧？<br>
+              </p><br>              
+              <p><wb:share-button appkey="1530952887" addition="simple" type="button" ralateUid="2232841707" default_text="mords.cc ， 你值得拥有！" pic="http%3A%2F%2Fwww.mords.cc%2Fmedia%2Fprofile_images%2Fmords_logo.png"></wb:share-button></p><br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /.carousel -->
 {% endblock %}

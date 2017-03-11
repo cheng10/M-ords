@@ -14,17 +14,25 @@
     <title>Mords</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="{% static 'mords/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'mords/vendor/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
     <link href="{% static 'mords/vendor/metisMenu/metisMenu.min.css' %}" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="{% static 'mords/dist/css/sb-admin-2.css' %}" rel="stylesheet">
+    <link href="{% static 'mords/less/reset.css' %}" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="{% static 'mords/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
 
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Bootstrap Material Design -->
+    <link rel="stylesheet" type="text/css" href="{% static 'mords/vendor/bootstrap-material-design/dist/css/bootstrap-material-design.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'mords/vendor/bootstrap-material-design/dist/css/ripples.css' %}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -34,7 +42,7 @@
 
 </head>
 
-<body>
+<body class="body-bg">
 
     <div class="container">
         <div class="row">
@@ -59,8 +67,13 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="{% static 'mords/vendor/metisMenu/metisMenu.min.js' %}"></script>
 
-    <!-- Custom Theme JavaScript -->
-    <script src="{% static 'mords/dist/js/sb-admin-2.js' %}"></script>
+    <!-- Custom Theme JavaScript --> 
+    <script src="{% static 'mords/vendor/bootstrap-material-design/dist/js/material.min.js' %}"></script>
+    <script src="{% static 'mords/vendor/bootstrap-material-design/dist/js/ripples.min.js' %}"></script>
+
+    <script type="text/javascript">
+        $.material.init();
+    </script>
 
 </body>
 

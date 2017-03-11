@@ -2,15 +2,33 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    Index
+    Book Detail
 {% endblock %}
 
 {% block body_block %}
 
     <h1 class="page-header">{{ book.name }}</h1>
 
-    <blockquote><p class="text-muted">updated on: {{book.update_date}}</p></blockquote>
+    <wb:share-button appkey="1530952887" addition="simple" type="button" ralateUid="2232841707" default_text="mords.cc ， 你值得拥有！" pic="http%3A%2F%2Fwww.mords.cc%2Fmedia%2Fprofile_images%2Fmords_logo.png" class="pull-right"></wb:share-button>
 
+    <blockquote><p class="text-muted">Last updated: {{book.update_date}}</p></blockquote>
+
+    {% if entrys.paginator.num_pages > 1 %}
+    <ul class="pager">
+        {% if entrys.has_previous %}
+            <li class="previous">
+                <a href="?page={{ entrys.previous_page_number }}">← Newer</a>
+            </li>
+        {% else %}
+            <li class="previous disabled"><a href="#">← Newer</a></li>
+        {% endif %}
+        {% if entrys.has_next %}
+            <li class="next"><a class="withripple" href="?page={{ entrys.next_page_number }}">Older →</a></li>
+        {% else %}
+            <li class="next"><a class="withripple" href="#">Older →</a></li>
+        {% endif %}
+    </ul>
+    {% endif %}
 
     {% if entrys %}
         <ul>
@@ -22,9 +40,9 @@
     {% else %}
         <p>No words are available.</p>
     {% endif %}
+    <hr>
 
-    <wb:share-button appkey="1530952887" addition="simple" type="button" ralateUid="2232841707" default_text="mords.cc ， 你值得拥有！" pic="http%3A%2F%2Fwww.mords.cc%2Fmedia%2Fprofile_images%2Fmords_logo.png"></wb:share-button>
-
+    <!--
     {% if entrys.paginator.num_pages > 1 %}
     <hr/>
     <ul class="pagination">
@@ -53,5 +71,6 @@
         {% endif %}
     </ul>
     {% endif %}
+    -->
 
 {% endblock %}

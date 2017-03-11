@@ -14,21 +14,18 @@ from mords_api.models import Note, Word, Learner, Entry, Book, LearningWord
 from forms import UserForm, LearnerForm, PasswordForm
 
 
+@login_required
 def index(request):
-    latest_note_list = Note.objects.order_by('-pub_date')
-    paginator = Paginator(latest_note_list, 30)  # Show 30 words per page
+    learner = Learner.objects.get(user=request.user)
+    to_learn = learner.words_perDay - learner.words_finished
+    word_num = len(LearningWord.objects.filter(learner=learner).filter(lv__in=[1, 2]))
+    context = {
+        "learner": learner,
+        "to_learn": to_learn,
+        "word_num": word_num
+    }
 
-    page = request.GET.get('page')
-    try:
-        notes = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        notes = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        notes = paginator.page(paginator.num_pages)
-
-    return render(request, 'mords/index.html', {'latest_note_list': notes})
+    return render(request, 'mords/index.html', context)
 
 
 # class IndexView(generic.ListView):
@@ -309,10 +306,10 @@ def learn(request):
         return render(request, 'mords/learn.html', context)
 
     if random.random() > 0.7:
-        lword = LearningWord.objects.filter(learner=learner).filter(lv__in=[1, 2, 3]).order_by('?')[0]
+        lword = LearningWord.objects.filter(learner=learner).filter(lv__in=[2, 3]).order_by('?')[0]
         print('new word')
     else:
-        lword = LearningWord.objects.filter(learner=learner).filter(lv__in=[1, 2, 3]).order_by('-lv')[0]
+        lword = LearningWord.objects.filter(learner=learner).filter(lv__in=[2, 3]).order_by('-lv')[0]
         print('old word')
 
     notes = lword.word.note_set.all()
@@ -332,6 +329,28 @@ def learn(request):
         'notes': notes
     }
     return render(request, 'mords/learn.html', context)
+
+
+def review(request):
+    learner = Learner.objects.get(user=request.user)
+    lwords = LearningWord.objects.filter(learner=learner).filter(lv__in=[1, 2]).order_by('-update_datetime')
+
+    paginator = Paginator(lwords, 30)  # Show 30 entrys per page
+
+    page = request.GET.get('page')
+    try:
+        lwords = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        lwords = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        lwords = paginator.page(paginator.num_pages)
+
+    context = {
+        'lwords': lwords,
+    }
+    return render(request, 'mords/review.html', context)
 
 
 def book_detail(request, book_name):

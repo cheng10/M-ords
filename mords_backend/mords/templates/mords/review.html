@@ -1,0 +1,74 @@
+{% extends 'mords/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Review
+{% endblock %}
+
+{% block body_block %}
+
+    <h1 class="page-header">Review 复习</h1>
+
+    <wb:share-button appkey="1530952887" addition="simple" type="button" ralateUid="2232841707" default_text="mords.cc ， 你值得拥有！" pic="http%3A%2F%2Fwww.mords.cc%2Fmedia%2Fprofile_images%2Fmords_logo.png" class="pull-right"></wb:share-button>
+
+    {% if lwords.paginator.num_pages > 1 %}
+    <ul class="pager">
+        {% if lwords.has_previous %}
+            <li class="previous">
+                <a href="?page={{ lwords.previous_page_number }}">← Newer</a>
+            </li>
+        {% else %}
+            <li class="previous disabled"><a href="#">← Newer</a></li>
+        {% endif %}
+        {% if lwords.has_next %}
+            <li class="next"><a class="withripple" href="?page={{ lwords.next_page_number }}">Older →</a></li>
+        {% else %}
+            <li class="next"><a class="withripple" href="#">Older →</a></li>
+        {% endif %}
+    </ul>
+    {% endif %}
+
+    {% if lwords %}
+        <ul>
+            {% for lword in lwords %}
+            <!--<li><a href="/mords/{{ note.word.text }}/note/">{{ note.text }}</a></li>-->
+                <li><a href="{% url 'mords:detail' lword.word.id %}">{{ lword.word.text }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No words are available.</p>
+    {% endif %}
+    <hr>
+
+    <!--
+    {% if lwords.paginator.num_pages > 1 %}
+    <hr/>
+    <ul class="pagination">
+        {% if lwords.number > 1 %}
+        <li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+            <a href="?page=1">1 <<</a>
+        </li>
+        {% endif %}
+        {% if lwords.has_previous %}
+        <li class="paginate_button previous" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous">
+            <a href="?page={{ lwords.previous_page_number }}"><</a>
+        </li>
+        {% endif %}
+        <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0">
+            <a href="#">{{lwords.number}}</a>
+        </li>
+        {% if lwords.has_next %}
+        <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next">
+            <a href="?page={{ lwords.next_page_number }}"> ></a>
+        </li>
+        {% endif %}
+        {% if lwords.number < lwords.paginator.num_pages %}
+        <li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
+            <a href="?page={{ lwords.paginator.num_pages }}">>> {{ lwords.paginator.num_pages }}</a>
+        </li>
+        {% endif %}
+    </ul>
+    {% endif %}
+    -->
+
+{% endblock %}

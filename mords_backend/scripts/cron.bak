@@ -20,7 +20,7 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 #
 # m h  dom mon dow   command
-
+TZ=America/Edmonton
 0 */2 * * * cd /home/ubuntu/M-ords/mords_backend/scripts; ./run_crawler.sh >> /home/ubuntu/M-ords/mords_backend/scripts/crawler.log 2>&1
 59 */2 * * * cd /home/ubuntu/M-ords/mords_backend/scripts; ./run_youdao.sh >> /home/ubuntu/M-ords/mords_backend/scripts/youdao.log 2>&1
 30 0 * * * cd /home/ubuntu/M-ords/mords_backend/scripts; ./reset_task.sh >> /home/ubuntu/M-ords/mords_backend/scripts/reset_task.log 2>&1

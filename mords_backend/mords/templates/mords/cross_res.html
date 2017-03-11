@@ -11,7 +11,7 @@
 
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-    <div class="jumbotron">
+    <div class="jumbotron word-card">
         <h1>{{ word.text }}</h1>
         <p class="fa fa-file-audio-o">
             US: {{ word.us_pho }}
@@ -21,11 +21,10 @@
             <form action="{% url 'mords:learn'%}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-primary">
-                    <i class="fa fa-arrow-circle-right"></i>
+                    <i class="fa fa-arrow-circle-right"></i>下一个单词
                 </button>
             </form>
         </p>
-        <wb:share-button appkey="1530952887" addition="simple" type="button" ralateUid="2232841707" default_text="mords.cc ， 你值得拥有！" pic="http%3A%2F%2Fwww.mords.cc%2Fmedia%2Fprofile_images%2Fmords_logo.png"></wb:share-button>
     </div>
 
     <div class="panel panel-primary">
@@ -35,7 +34,7 @@
         <!-- /.panel-heading -->
         <div class="panel-body">
             <!-- Nav tabs -->
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-pills">
                 {% for entry in word.entry_set.all %}
                 {% if forloop.counter < 2 %}
                 <li class="active"><a href="#{{ entry.book }}" data-toggle="tab" aria-expanded="true">{{ entry.book }}</a>
@@ -77,12 +76,13 @@
         </div>
         <div class="panel-body">
             {% for note in notes %}
-            <p>{{ note.text }}
-                <small>
+            <div>
+                <p class="text-primary" style="display: inline-block;">{{ note.text }}</p>
+                <small style="color: #757575">
                     by {{note.author}} on {{note.pub_date}}
                 </small>
-            </p>
-            <hr/>
+                <hr style="margin-top:0px;">
+            </div>
             {% endfor %}
 
             {% if notes.paginator.num_pages > 1 %}
@@ -112,32 +112,32 @@
                 {% endif %}
             </ul>
             {% endif %}
+            <div>
+            {% if user.is_authenticated %}
+            <form action="{% url 'mords:comment' word.id %}" method="post">
+            {% csrf_token %}
+            <!--{% for note in notes %}-->
+                <!--<label for="note{{ forloop.counter }}">{{ note.text }}</label><br />-->
+            <!--{% endfor %}-->
+                <div class="form-group label-floating">
+                    <label class="control-label" for="note{{ forloop.counter }}">Add your notes </label>
+                    <input class="form-control" name="note" id="note{{ forloop.counter }}" value="{{ note.text }}" type="text">
+                    <input type="submit" value="Comment" class="btn btn-default btn-primary pull-right" style="margin-top:0px;" />
+                </div>            
+            </form>
+            {% else %}
+            <form action="{% url 'mords:login' %}">
+                {% csrf_token %}
+                <input type="submit" value="Login to Comment" class="btn btn-primary"/>
+            </form>
+            {% endif %}
+            </div>
 
         </div>
     </div>
 
 
     <hr/>
-
-    {% if user.is_authenticated %}
-    <form action="{% url 'mords:comment' word.id %}" method="post">
-    {% csrf_token %}
-    <!--{% for note in notes %}-->
-        <!--<label for="note{{ forloop.counter }}">{{ note.text }}</label><br />-->
-    <!--{% endfor %}-->
-        <div class="form-group">
-            <textarea type="text" name="note" id="note{{ forloop.counter }}" value="{{ note.text }}"
-            class="form-control">
-            </textarea>
-            <input type="submit" value="Comment" class="btn btn-default"/>
-        </div>
-    </form>
-    {% else %}
-    <form action="{% url 'mords:login' %}">
-        {% csrf_token %}
-        <input type="submit" value="Login to Comment" class="btn btn-default"/>
-    </form>
-    {% endif %}
 
 {% endblock %}
 

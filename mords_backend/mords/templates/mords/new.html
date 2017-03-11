@@ -7,7 +7,24 @@
 
 {% block body_block %}
 
-    <h1 class="page-header">Today's New Words</h1>
+    <h1 class="page-header">Today's New Words 今日新词</h1>
+
+    {% if latest_word_list.paginator.num_pages > 1 %}
+    <ul class="pager">
+        {% if latest_word_list.has_previous %}
+            <li class="previous">
+                <a href="?page={{ latest_word_list.previous_page_number }}">← Newer</a>
+            </li>
+        {% else %}
+            <li class="previous disabled"><a href="#">← Newer</a></li>
+        {% endif %}
+        {% if latest_word_list.has_next %}
+            <li class="next"><a class="withripple" href="?page={{ latest_word_list.next_page_number }}">Older →</a></li>
+        {% else %}
+            <li class="next"><a class="withripple" href="#">Older →</a></li>
+        {% endif %}
+    </ul>
+    {% endif %}
 
     {% if latest_word_list %}
         <ul>
@@ -20,37 +37,8 @@
     {% else %}
         <p>No new entries are available.</p>
     {% endif %}
+    <hr>
 
-        <wb:share-button appkey="1530952887" addition="simple" type="button" ralateUid="2232841707" default_text="mords.cc ， 你值得拥有！" pic="http%3A%2F%2Fwww.mords.cc%2Fmedia%2Fprofile_images%2Fmords_logo.png"></wb:share-button>
-
-    {% if latest_word_list.paginator.num_pages > 1 %}
-    <hr/>
-    <ul class="pagination">
-        {% if latest_word_list.number > 1 %}
-        <li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
-            <a href="?page=1">1 <<</a>
-        </li>
-        {% endif %}
-        {% if latest_word_list.has_previous %}
-        <li class="paginate_button previous" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous">
-            <a href="?page={{ latest_word_list.previous_page_number }}"><</a>
-        </li>
-        {% endif %}
-        <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0">
-            <a href="#">{{latest_word_list.number}}</a>
-        </li>
-        {% if latest_word_list.has_next %}
-        <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next">
-            <a href="?page={{ latest_word_list.next_page_number }}"> ></a>
-        </li>
-        {% endif %}
-        {% if latest_word_list.number < latest_word_list.paginator.num_pages %}
-        <li class="paginate_button " aria-controls="dataTables-example" tabindex="0">
-            <a href="?page={{ latest_word_list.paginator.num_pages }}">>> {{ latest_word_list.paginator.num_pages }}</a>
-        </li>
-        {% endif %}
-    </ul>
-    {% endif %}
 
 
 {% endblock %}

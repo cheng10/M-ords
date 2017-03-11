@@ -6,7 +6,7 @@ from pprint import pprint
 
 
 class Command(BaseCommand):
-    help = 'crawl dictionary data from urban dictionary'
+    help = 'fetch word info from youdao dictionary API'
 
     def handle(self, *args, **options):
         book, created = Book.objects.get_or_create(name='youdao',
