@@ -193,8 +193,7 @@ def detail(request, word_id):
     :return:
     """
     word = get_object_or_404(Word, id=word_id)
-    notes = word.note_set.all()
-    # notes = word.note_set.all().filter(pub_date__lte=timezone.now())
+    notes = word.note_set.all().filter(pub_date__lte=timezone.now())
     paginator = Paginator(notes, 5)  # Show 5 notes per page
 
     page = request.GET.get('page')

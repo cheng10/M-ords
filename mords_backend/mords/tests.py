@@ -78,103 +78,6 @@ def create_note(word, author, note_text, days):
     )
 
 
-class NoteViewTests(TestCase):
-    def setUp(self):
-        user = create_user("testUser", "testPass")
-        word1 = create_word("apple")
-        word2 = create_word("banana")
-        test_book = create_book("testBook", [word1, word2])
-        self.test_word = word1
-        self.test_learner = create_learner(user, test_book, 3)
-
-    def test_index_view_with_no_notes(self):
-        """
-        If no no notes exist, an appropriate message should be displayed.
-        :return: None
-        """
-        response = self.client.get(reverse('mords:index'))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "No notes are available.")
-        self.assertQuerysetEqual(response.context['latest_note_list'], [])
-
-    def test_index_view_with_a_past_note(self):
-        """
-        Notes with a pub_date in the past should be displayed on the
-        index page.
-        """
-        create_note(
-            author=self.test_learner,
-            word=self.test_word,
-            note_text="Past note.",
-            days=-30
-        )
-        response = self.client.get(reverse('mords:index'))
-        self.assertQuerysetEqual(
-            response.context['latest_note_list'],
-            ['<Note: Past note.>']
-        )
-
-    def test_index_view_with_a_future_note(self):
-        """
-        Notes with a pub_date in the future should not be displayed on the
-        index page.
-        """
-        create_note(
-            author=self.test_learner,
-            word=self.test_word,
-            note_text="Future note.",
-            days=30
-        )
-        response = self.client.get(reverse('mords:index'))
-        self.assertContains(response, "No notes are available.")
-        self.assertQuerysetEqual(response.context['latest_note_list'], [])
-
-    def test_index_view_with_future_note_and_past_note(self):
-        """
-        Even if both past and future notes exist, only past notes
-        should be displayed.
-        """
-        create_note(
-            author=self.test_learner,
-            word=self.test_word,
-            note_text="Past note.",
-            days=-30
-        )
-        create_note(
-            author=self.test_learner,
-            word=self.test_word,
-            note_text="Future note.",
-            days=30
-        )
-        response = self.client.get(reverse('mords:index'))
-        self.assertQuerysetEqual(
-            response.context['latest_note_list'],
-            ['<Note: Past note.>']
-        )
-
-    def test_index_view_with_two_past_notes(self):
-        """
-        The notes index page may display multiple notes.
-        """
-        create_note(
-            author=self.test_learner,
-            word=self.test_word,
-            note_text="Past note 1.",
-            days=-30
-        )
-        create_note(
-            author=self.test_learner,
-            word=self.test_word,
-            note_text="Past note 2.",
-            days=-5
-        )
-        response = self.client.get(reverse('mords:index'))
-        self.assertQuerysetEqual(
-            response.context['latest_note_list'],
-            ['<Note: Past note 2.>', '<Note: Past note 1.>']
-        )
-
-
 class NoteIndexDetailTests(TestCase):
     def setUp(self):
         user = create_user("testUser", "testPass")
@@ -195,24 +98,9 @@ class NoteIndexDetailTests(TestCase):
             note_text='Future note.',
             days=5
         )
-        url = reverse('mords:detail', args=(self.test_word.text,))
+        url = reverse('mords:detail', args=(self.test_word.id,))
         response = self.client.get(url)
         self.assertNotContains(response, future_note.text)
-
-    def test_detail_view_with_a_past_note(self):
-        """
-        The detail view of a word should display past notes.
-        :return:
-        """
-        past_note = create_note(
-            word=self.test_word,
-            author=self.test_learner,
-            note_text='Past note.',
-            days=-5
-        )
-        url = reverse('mords:detail', args=(self.test_word.text,))
-        response = self.client.get(url)
-        self.assertContains(response, past_note.text)
 
 
 class NoteMethodTests(TestCase):
