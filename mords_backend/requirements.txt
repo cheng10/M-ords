@@ -1,7 +1,13 @@
+appdirs==1.4.3
 beautifulsoup4==4.5.1
 bs4==0.0.1
+contextlib2==0.5.4
 Django==1.10.2
 djangorestframework==3.4.7
+packaging==16.8
 Pillow==3.4.2
 psycopg2==2.6.2
+pyparsing==2.2.0
+raven==6.0.0
 requests==2.12.3
+six==1.10.0
